@@ -91,7 +91,7 @@
     };
 
     /**
-     * isFunction
+     * 判断参数a是否函数
      * @param a
      * @returns {boolean}
      * @constructor
@@ -101,7 +101,7 @@
     }
 
     /**
-     *
+     * 判断参数a是否字符串
      * @param a
      * @returns {boolean}
      */
@@ -230,8 +230,8 @@
 
     /**
      *
-     * @param a
-     * @param b
+     * @param a {Object}
+     * @param b {Array}
      * @returns {*}
      */
     function wa(a, b) {
