@@ -78,10 +78,4 @@ Google Analytics中的监测指标
 ![](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/e-commerce_report.jpg)
 
 ### 次级维度 ###
-![次级维度_访问者](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/secondary_dimension-visitors.jpg)
-
-![次级维度_技术](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/secondary_dimension-technology.jpg)
-
-![次级维度_流量来源](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/secondary_dimension-traffic_sources.jpg)
-
-![次级维度_内容](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/secondary_dimension-content.jpg)
+![次级维度](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/secondary_dimension.jpg)
