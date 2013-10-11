@@ -63,7 +63,7 @@ http://www.google-analytics.com/collect?
 
 ### 参数说明 ###
 - _ga：域为 被监测网站（如.example.com），路径为/，过期时间是2年以后。值如 GA.1.2.232959034.1381396409 。
-当客户端存有TANX域的Cookie时，广告调度请求携带Cookie参数。没有Cookie，则不必携带。
+当客户端没有 _ga 的Cookie时，由analytics.js执行生成；客户端存有 _ga 的Cookie时，刷新 cookie过期时间 Expires/Max-age。
 
 Google Analytics中的监测指标
 --
