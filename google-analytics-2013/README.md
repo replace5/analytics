@@ -26,6 +26,7 @@ analytics.js分析
 参见：[www.google-analytics.com/analytics.js](https://github.com/clientlab/analytics/blob/master/google-analytics-2013/www.google-analytics.com/analytics.js)
 
 计数URL和参数
+--
 ![](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/send_request.jpg)
 --
 使用信标方式(即：通过1x1 img的src属性)发送计数请求
