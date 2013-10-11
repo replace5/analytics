@@ -888,6 +888,12 @@
         for (var e = 0; e < b[y]; e++)if (b[e][h] == c || b[e][h] == d)return b[e]
     };
 
+    /**
+     * 返回生成
+     * @param a cid
+     * @returns {string}
+     * @constructor
+     */
     function Bc(a) {
         a = a.get(Q);
         var b = Ic(a, 0);
