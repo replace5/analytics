@@ -91,7 +91,7 @@
     };
 
     /**
-     * isFunction
+     * 判断参数a是否函数
      * @param a
      * @returns {boolean}
      * @constructor
@@ -101,7 +101,7 @@
     }
 
     /**
-     *
+     * 判断参数a是否字符串
      * @param a
      * @returns {boolean}
      */
@@ -230,8 +230,8 @@
 
     /**
      *
-     * @param a
-     * @param b
+     * @param a {Object}
+     * @param b {Array}
      * @returns {*}
      */
     function wa(a, b) {
@@ -888,6 +888,12 @@
         for (var e = 0; e < b[y]; e++)if (b[e][h] == c || b[e][h] == d)return b[e]
     };
 
+    /**
+     * 返回生成
+     * @param a cid
+     * @returns {string}
+     * @constructor
+     */
     function Bc(a) {
         a = a.get(Q);
         var b = Ic(a, 0);
