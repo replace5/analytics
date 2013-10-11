@@ -68,7 +68,7 @@ http://www.google-analytics.com/collect?
 Google Analytics中的监测指标
 --
 
-### 全部网站数据 ###
+### 全部网站数据（摘要） ###
 ![](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/report.jpg)
 
 ### 网站使用情况 ###
@@ -76,3 +76,5 @@ Google Analytics中的监测指标
 
 ### 电子商务 ###
 ![](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/e-commerce_report.jpg)
+
+#### 次级维度 ####
