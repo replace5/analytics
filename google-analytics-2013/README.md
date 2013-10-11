@@ -8,7 +8,7 @@ GA
 
 网络视图
 --
-![ga网络视图](https://github.com/TingGe/internet-analytics/blob/master/google-analytics/img/network.jpg?raw=true)
+![ga网络视图](https://raw.github.com/TingGe/analytics/master/google-analytics-2013/img/network.jpg)
 
 监测埋点
 --
@@ -25,10 +25,10 @@ GA
 
 analytics.js分析
 --
-参见：[www.google-analytics.com/analytics.js](https://github.com/TingGe/internet-analytics/blob/master/google-analytics/www.google-analytics.com/analytics.js)
+参见：[www.google-analytics.com/analytics.js](https://github.com/TingGe/analytics/blob/master/google-analytics-2013/www.google-analytics.com/analytics.js)
 
 计数URL和参数
-![](https://raw.github.com/TingGe/internet-analytics/master/google-analytics/img/send_request.jpg)
+![](https://raw.github.com/TingGe/analytics/master/google-analytics-2013/img/send_request.jpg)
 --
 使用信标方式(即：通过1x1 img的src属性)发送计数请求
 
@@ -60,7 +60,7 @@ http://www.google-analytics.com/collect?
 浏览器端存储
 --
 ### cookie ###
-![](https://raw.github.com/TingGe/internet-analytics/master/google-analytics/img/cookie.jpg)
+![](https://raw.github.com/TingGe/analytics/master/google-analytics-2013/img/cookie.jpg)
 
 ### 参数说明 ###
 - _ga：域为 被监测网站（如.example.com），路径为/，过期时间是2年以后。值如 GA.1.2.232959034.1381396409 。
@@ -70,10 +70,10 @@ Google Analytics中的监测指标
 --
 
 ### 全部网站数据 ###
-![](https://raw.github.com/TingGe/internet-analytics/master/google-analytics/img/report.jpg)
+![](https://raw.github.com/TingGe/analytics/master/google-analytics-2013/img/report.jpg)
 
 ### 网站使用情况 ###
-![](https://raw.github.com/TingGe/internet-analytics/master/google-analytics/img/website_report.jpg)
+![](https://raw.github.com/TingGe/analytics/master/google-analytics-2013/img/website_report.jpg)
 
 ### 电子商务 ###
-![](https://raw.github.com/TingGe/internet-analytics/master/google-analytics/img/e-commerce_report.jpg)
+![]()
