@@ -36,7 +36,7 @@ Google Analytics
 	            (i[r].q = i[r].q || []).push(arguments)
 	        },
 	
-	        i[r].l = 1 * new Date();  //创建ga <script>标签时的时间戳
+	        i[r].l = 1 * new Date(); //创建ga <script>标签时的时间戳
 	
 	        /*
 	        引入analytics.js
