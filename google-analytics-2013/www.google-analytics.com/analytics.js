@@ -653,7 +653,11 @@
         var Qc = f.GoogleAnalyticsObject;
         Pc = Qc ? Qc.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "") : ""
     }
-    var gb = Pc || "ga", Ba = !1, hb = T("apiVersion", "v"), ib = T("clientVersion", "_v");
+    var
+        gb = Pc || "ga",
+        Ba = !1, hb = T("apiVersion", "v"),
+        ib = T("clientVersion", "_v");
+    //
     S("anonymizeIp", "aip");
     var jb = S("adSenseId", "a"), Va = S("hitType", "t"), Ia = S("hitCallback"), Ra = S("hitPayload");
     S("nonInteraction", "ni");
