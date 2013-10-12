@@ -30,7 +30,7 @@ Google Analytics
 	        i['GoogleAnalyticsObject'] = r; //定义谷歌的命名空间 ‘ga'
 	
 	        /*
-	        定义谷歌的命名空间 ‘ga’ 和 队列
+	        初始化 window.ga.q 的 argument 队列
 	         */
 	        i[r] = i[r] || function () {
 	            (i[r].q = i[r].q || []).push(arguments)
@@ -84,7 +84,7 @@ http://www.google-analytics.com/collect?
 - fl=11.8%20r800 ：Flash版本
 - _u=ME~ ：usage
 - cid=1568799843.1381222720 ：clientId
-- tid=UA-44687225-1 ：trackingId
+- tid=UA-44687225-1 ：跟踪对象的ID
 - z=1013138030 ：0和2147483647之间的伪随机数，可能为0，但总是小于2147483647，[0,2147483647)
 
 浏览器端存储
