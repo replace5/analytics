@@ -60,7 +60,7 @@ analytics.js分析
 --
 ![](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/send_request.jpg)
 --
-使用信标方式(即：通过1x1 img的src属性)发送计数请求
+根据计数请求URL中参数长度和浏览器，从信标(即通过1x1 img的src属性)、XDomainRequest异步请求和iframe的src属性三种方式中选取一种方式发送计数请求。上图中为使用信标方式发送计数请求。
 
 http://www.google-analytics.com/collect?v=1&_v=j13&a=994561489&t=pageview&_s=1&dl=http%3A%2F%2Fweb.example.com%2Findex.html&ul=zh-cn&de=UTF-8&dt=test&sd=32-bit&sr=1440x900&vp=1440x445&je=1&fl=11.8%20r800&_u=ME~&cid=1568799843.1381222720&tid=UA-44687225-1&z=1013138030
 
