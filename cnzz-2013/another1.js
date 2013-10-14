@@ -12,7 +12,7 @@ function() {
 	m = "&#20840;&#26223;&#32479;&#35745;",
 	n = window["_CNZZDbridge_" + e].bobject,
 	o = "https:" == document.location.protocol ? "https:": "http:",
-	p = "0",
+	p = "1",
 	q = o + "//online.cnzz.com/online/" + h,
 	r = [];
 	r.push("id=" + e),
