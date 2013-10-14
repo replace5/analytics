@@ -132,15 +132,15 @@
     }
 
     /**
-     *
+     * 空函数
      * @constructor
      */
     function L() {
     }
 
     /**
-     *
-     * @param a
+     * 使用encodeURIComponent将a编码
+     * @param a URL
      * @returns {*}
      */
     function sa(a) {
@@ -334,10 +334,11 @@
          */
         zc = function (a, b, c, d, e, g) {
             e = xa(e) ? !1 : Aa.test(M[B][ma]) || "/" == c && za.test(d) ? !1 : !0;
-            if (!e)return!1;
+            if (!e){
+                return!1;
+            }
             b && 200 < b[y] && (b = b[F](0, 200), J(24));
-            a =
-                a + "=" + b + "; path=" + c + "; ";
+            a = a + "=" + b + "; path=" + c + "; ";
             g && (a += "expires=" + (new Date((new Date)[da]() + g)).toGMTString() + "; ");
             d && "none" != d && (a += "domain=" + d + ";");
             d = M[r];
@@ -350,15 +351,17 @@
          */
         za = ea(/^(www\.)?google(\.com?)?(\.[a-z]{2})?$/), Aa = ea(/(^|\.)doubleclick\.net$/i);
 
-    var /**
-         *
+    var
+        /**
+         *  根据 location.protocol，返回 Google Analytics 的计数URL
          */
         oc = function () {
             return(Ba || "https:" == M[B][E] ? "https:" : "http:") + "//www.google-analytics.com"
         },
 
         /**
-         *
+         * 标识 计数请求参数的长度
+         * @param a {String} 计数请求参数的长度
          */
         Da = function (a) {
             fa(this, "len");
@@ -366,7 +369,7 @@
         },
 
         /**
-         *
+         * 标识为Firefox浏览器
          */
         Ea = function (a) {
             fa(this, "ff2post");
@@ -374,19 +377,29 @@
         },
 
         /**
-         *
+         * 根据计数请求参数的长度和浏览器，采用不同的方式发送计数请求
+         * @param a {String} 计数请求的参数
+         * @param b {Function} 发送请求后的回调函数
          */
         Ga = function (a, b) {
             b = b || L;
-            if (2036 >= a[y])wc(a, b); else if (8192 >= a[y]) {
+            if (2036 >= a[y]){
+                wc(a, b);
+            } else if (8192 >= a[y]) {
                 var c = b;
-                if (0 <= O[oa].userAgent[t]("Firefox") && ![].reduce)throw new Ea(a[y]);
+                if (0 <= O[oa].userAgent[t]("Firefox") && ![].reduce){
+                    throw new Ea(a[y]);
+                }
                 xc(a, c) || Fa(a, c)
-            } else throw new Da(a[y]);
+            } else {
+                throw new Da(a[y]);
+            }
         },
 
         /**
-         *
+         * 通过 img标签src属性的方式 发送计数请求
+         * @param a {String} 计数请求的参数
+         * @param b {Function} 发送请求后的回调函数
          */
         wc = function (a, b) {
             var c = Ca(oc() + "/collect?" + a);
@@ -396,16 +409,30 @@
                 b()
             }
         },
+
+        /**
+         * IE浏览器中，通过 XDomainRequest方式 异步发送跨域的计数请求
+         * @param a {String} 计数请求的参数
+         * @param b {Function} 发送请求后的回调函数
+         */
         xc = function (a, b) {
             var c, d = O.XDomainRequest;
-            if (d)c = new d, c.open("POST", oc() + "/collect"); else if (d = O.XMLHttpRequest)d = new d, "withCredentials"in d && (c = d, c.open("POST", oc() + "/collect", !0), c.setRequestHeader("Content-Type", "text/plain"));
-            if (c)return c.onreadystatechange = function () {
-                4 == c.readyState && (b(), c = null)
-            }, c.send(a), !0
+            if (d){
+                c = new d, c.open("POST", oc() + "/collect");
+            } else if (d = O.XMLHttpRequest){
+                d = new d,
+                "withCredentials"in d && (c = d, c.open("POST", oc() + "/collect", !0),
+                c.setRequestHeader("Content-Type", "text/plain"));
+            }
+            if (c){
+                return c.onreadystatechange = function () {
+                    4 == c.readyState && (b(), c = null)
+                }, c.send(a), !0
+            }
         },
 
         /**
-         *
+         *  通过 iframe标签src属性的方式 发送计数请求
          */
         Fa = function (a, b) {
             if (M.body) {
@@ -420,10 +447,12 @@
                 c.style.display = "none";
                 c.style.visibility =
                     "hidden";
-                var e = M[B], e = oc() + "/analytics_iframe.html#" + aa(e[E] + "//" + e[x] + "/favicon.ico"), g = function () {
-                    c.src = "";
-                    c[Ub] && c[Ub].removeChild(c)
-                };
+                var e = M[B],
+                    e = oc() + "/analytics_iframe.html#" + aa(e[E] + "//" + e[x] + "/favicon.ico"),
+                    g = function () {
+                        c.src = "";
+                        c[Ub] && c[Ub].removeChild(c)
+                    };
                 ta(O, "beforeunload", g);
                 var ca = !1, l = 0, k = function () {
                     if (!ca) {
@@ -520,6 +549,8 @@
 
     /**
      *
+     * @param a {}
+     * @constructor
      */
     function Sa(a) {
         Ga(P(a, Ra), a.get(Ia));
@@ -648,12 +679,22 @@
         },
         db = function () {
         };
+
+    /**
+     * 矫正并设置Google Analytics 的命名空间
+     */
     var Pc;
     if (Pc = qa(f.GoogleAnalyticsObject)) {
         var Qc = f.GoogleAnalyticsObject;
         Pc = Qc ? Qc.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "") : ""
     }
-    var gb = Pc || "ga", Ba = !1, hb = T("apiVersion", "v"), ib = T("clientVersion", "_v");
+
+
+    var
+        gb = Pc || "ga",
+        Ba = !1, hb = T("apiVersion", "v"),
+        ib = T("clientVersion", "_v");
+    //
     S("anonymizeIp", "aip");
     var jb = S("adSenseId", "a"), Va = S("hitType", "t"), Ia = S("hitCallback"), Ra = S("hitPayload");
     S("nonInteraction", "ni");
@@ -714,6 +755,10 @@
     var Qb = T("oot"), dd = S("previewTask"), Rb = S("checkProtocolTask"), Sb = S("checkStorageTask"), Uc = S("historyImportTask"), Tb = S("samplerTask"), Vb = T("rateLimiterTask"), Wb = S("buildHitTask"), Xb = S("sendHitTask"), Vc = S("ceTask"), V = T("name"), Q = T("clientId", "cid"), Na = T("trackingId", "tid"), U = T("cookieName", void 0, "_ga"), W = T("cookieDomain"), Yb = T("cookiePath", void 0, "/"), Zb = T("cookieExpires", void 0, 63072E3), $b = T("legacyCookieDomain"), Wc = T("legacyHistoryImport", void 0, !0), ac = T("storage", void 0, "cookie"), bc = T("allowLinker",
         void 0, !1), cc = T("allowAnchor", void 0, !0), Ka = T("sampleRate", "sf", 100), dc = T("siteSpeedSampleRate", void 0, 1), ec = T("alwaysSendReferrer", void 0, !1);
 
+    /**
+     * 将 analytics.js 中的属性和方法赋给 window.命名空间
+     * @constructor
+     */
     function Cc() {
         var a = $;
         X("create", a, a.create, 3);
@@ -734,6 +779,14 @@
         Z.C("displayfeatures", fd)
     }
 
+    /**
+     *
+     * @param a {String} 方法名称
+     * @param b {Object} Google Analytics 的命名空间(全局变量)
+     * @param c {Function}
+     * @param d {Number}
+     * @constructor
+     */
     function X(a, b, c, d) {
         b[a] = function () {
             try {
@@ -1191,18 +1244,27 @@
 
     var
         /**
-         *
-         * @param a
+         * HTML5 Page Visibility API：检测页面是否预渲染中并且不可见状态
+         * @param a {String} 回调函数名称
          * @returns {boolean}
          */
         rc = function (a) {
-            if ("prerender" == M.webkitVisibilityState)return!1;
+            /*
+             “visible” 当前页面至少部分可见
+             “hidden” 页面不可见(可能是后台tab或者最小化了)
+             “prerender” 预渲染中并且不可见,该状态可以是开始状态并且向其他两个状态变化但不可能从其他状态转变到该状态
+             */
+            if ("prerender" == M.webkitVisibilityState){
+                return!1;
+            }
             a();
             return!0
         },
 
         /**
-         *
+         * HTML5 Page Visibility API：增加或移除监听页面对于用户的可见性的事件
+         * @param a {Function} 回调函数
+         * @returns {boolean}
          */
         Mc = function (a) {
             if (!rc(a)) {
@@ -1354,7 +1416,7 @@
     };
 
     /**
-     *
+     * Google Analytics 的命名空间
      * @param a
      */
     var $ = function (a) {
@@ -1376,7 +1438,9 @@
         var b = wa(uc, [][ha][C](arguments));
         b[V] || (b[V] = "t0");
         var c = "" + b[V];
-        if ($.h[c])return $.h[c];
+        if ($.h[c]){
+            return $.h[c];
+        }
         b = new pc(b);
         $.h[c] = b;
         $.P[p](b);
@@ -1384,7 +1448,7 @@
     };
 
     /**
-     *
+     *  getByName
      * @param a
      * @returns {*}
      */
@@ -1408,8 +1472,8 @@
     $.N = function () {
         var a = O[gb];
         if (!a || 42 != a.answer) {
-            $.L = a && a.l;
-            $.loaded = !0;
+            $.L = a && a.l;//将埋点中的时间戳，存为 命名空间的属性
+            $.loaded = !0; //标识为已加载
             O[gb] = $;
             Cc();
             var b = a && a.q;
@@ -1418,6 +1482,10 @@
             })
         }
     };
+
+    /**
+     *
+     */
     $.N();
 
     /**
