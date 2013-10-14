@@ -665,6 +665,9 @@
             });
             return b && b[v]
         },
+        /**
+         *
+         */
         S = function (a, b, c, d, e) {
             a = new bb(a, b, c, d, e);
             Qa.set(a[v], a);
@@ -692,44 +695,170 @@
 
     var
         gb = Pc || "ga",
-        Ba = !1, hb = T("apiVersion", "v"),
+        Ba = !1,
+        hb = T("apiVersion", "v"),
         ib = T("clientVersion", "_v");
-    //
+
+    /*
+     常规：IP 匿名化。将 IP地址最后位数换成0。
+     参见 https://support.google.com/analytics/answer/2763052
+     */
     S("anonymizeIp", "aip");
-    var jb = S("adSenseId", "a"), Va = S("hitType", "t"), Ia = S("hitCallback"), Ra = S("hitPayload");
+
+    var jb = S("adSenseId", "a"),
+    /*
+     * 一旦一个跟踪对象被创建并关联到一个网站的属性,您可以使用发送命令来将数据发送给web属性。一次发送给 Google Analytics数据的过程 称为一次冲击。
+     */
+        //冲击：冲击类型(Hit type)。值必须是 'pageview', 'appview', 'event', 'transaction', 'item', 'social', 'exception', 'timing'。
+        Va = S("hitType", "t"),
+
+        //常规：冲击回调函数
+        Ia = S("hitCallback"),
+        Ra = S("hitPayload");
+
+    //冲击：指定一个击中被认为是非交互式的。
     S("nonInteraction", "ni");
+
     S("currencyCode", "cu");
+
+    //Session会话：用来控制会话持续时间。值为“start”强制一个新的会话开始时这次打击和“end”强制当前会话结束这个打击。忽略其他值。
     S("sessionControl", "sc", "");
     S("queueTime", "qt");
     var Ac = S("_s", "_s");
     S("description", "cd");
-    var kb = S("location", "dl", ""), lb = S("referrer", "dr"), mb = S("page", "dp", "");
+
+    var
+    //内容信息：指定完整的URL(不含锚)的页面。由 create 方法初始化。
+        kb = S("location", "dl", ""),
+
+        //流量来源：指定推荐源
+        lb = S("referrer", "dr"),
+
+        //内容信息：页面URL的路径部分。应该使用‘/’开始，指定虚拟页面路径。
+        mb = S("page", "dp", "");
+
+    //内容信息：指定存储内容的主机名。
     S("hostname", "dh");
-    var nb = S("language", "ul"), ob = S("encoding", "de");
+    var
+        //系统信息：用户浏览器或系统语言。 由 create 方法初始化。
+        nb = S("language", "ul"),
+
+        //系统信息：指定页面/文档使用的字符集编码。由 create 方法初始化。
+        ob = S("encoding", "de");
+
+    //内容信息：网页/文档的标题。默认文档标题。
     S("title", "dt", function () {
         return M.title || void 0
     });
     cb("contentGroup([0-9]+)", function (a) {
         return new bb(a[0], "cg" + a[1])
     });
-    var pb = S("screenColors", "sd"), qb = S("screenResolution", "sr"), rb = S("viewportSize", "vp"), sb = S("javaEnabled", "je"), tb = S("flashVersion", "fl");
+
+    var
+        //系统信息：指定屏幕颜色深度。由 create 方法初始化。
+        pb = S("screenColors", "sd"),
+
+        //系统信息：指定屏幕分辨率。由 create 方法初始化。
+        qb = S("screenResolution", "sr"),
+
+        //系统信息：指定浏览器/设备的可视面积。由 create 方法初始化。
+        rb = S("viewportSize", "vp"),
+
+        //系统信息：指定是否启用Java。由 create 方法初始化。
+        sb = S("javaEnabled", "je"),
+
+        //系统信息：指定flash版本。由 create 方法初始化。
+        tb = S("flashVersion", "fl");
+
+    //流量来源：活动编号（ID）
     S("campaignId", "ci");
+
+    //流量来源：活动名称
     S("campaignName", "cn");
+
+    //流量来源：活动源
     S("campaignSource", "cs");
+
+    //流量来源：活动媒介
     S("campaignMedium", "cm");
+
+    //流量来源：活动关键词
     S("campaignKeyword", "ck");
+
+    //流量来源：活动内容
     S("campaignContent", "cc");
-    var ub = S("eventCategory", "ec"), xb = S("eventAction", "ea"), yb = S("eventLabel", "el"), zb = S("eventValue", "ev"), Bb = S("socialNetwork", "sn"), Cb = S("socialAction", "sa"), Db = S("socialTarget", "st"), Eb = S("l1", "plt"), Fb = S("l2", "pdt"), Gb = S("l3", "dns"), Hb = S("l4", "rrt"), Ib = S("l5", "srt"), Jb = S("l6", "tcp"), Kb = S("l7", "dit"), Lb = S("l8", "clt"), Mb = S("timingCategory", "utc"), Nb = S("timingVar", "utv"), Ob = S("timingLabel", "utl"), Pb = S("timingValue", "utt");
+
+
+    var
+        //事件跟踪：指定事件类别。不能为空。
+        ub = S("eventCategory", "ec"),
+
+        //事件跟踪：指定事件动作。不能为空。
+        xb = S("eventAction", "ea"),
+
+        //事件跟踪：指定事件标签。
+        yb = S("eventLabel", "el"),
+
+        //事件跟踪：指定事件的价值。值必须是非负数。
+        zb = S("eventValue", "ev"),
+
+        //社交互动：指定了社交网络,例如 Facebook 或 Google Plus 。需要 social 冲击类型。
+        Bb = S("socialNetwork", "sn"),
+
+        //社交互动：指定社交活动。例如在 Google Plus 上当用户点击“+ 1”按钮,社交活动是“plus”。需要 social 冲击类型。
+        Cb = S("socialAction", "sa"),
+
+        //社交互动：社交活动的目标。通常是一个URL也可以是一段文本。需要 social 冲击类型。
+        Db = S("socialTarget", "st"),
+        Eb = S("l1", "plt"),
+        Fb = S("l2", "pdt"),
+        Gb = S("l3", "dns"),
+        Hb = S("l4", "rrt"),
+        Ib = S("l5", "srt"),
+        Jb = S("l6", "tcp"),
+        Kb = S("l7", "dit"),
+        Lb = S("l8", "clt"),
+
+        //定时：指定用户定时类别。
+        Mb = S("timingCategory", "utc"),
+
+        //定时：指定用户定时变量名称。
+        Nb = S("timingVar", "utv"),
+
+        //定时：指定用户定时标签。
+        Ob = S("timingLabel", "utl"),
+
+        //定时：指定用户时间值。该值以毫秒为单位。
+        Pb = S("timingValue", "utt");
+
+    //应用跟踪：指定应用程序名称。只在应用视图(配置文件)可见。
     S("appName", "an");
+
+    //应用跟踪：指定应用程序版本。只在应用视图(配置文件)可见。
     S("appVersion", "av", "");
     S("appId", "aid", "");
     S("appInstallerId", "aiid", "");
+
+    //异常：指定一个异常的描述
     S("exDescription", "exd");
+
+    //异常：指定是否异常是致命的。
     S("exFatal", "exf");
-    var Nc = S("expId", "xid"), Oc = S("expVar", "xvar"), Rc = S("_utma", "_utma"), Sc = S("_utmz", "_utmz"), Tc = S("_utmht", "_utmht"), Ua = S("_hc", void 0, 0), Xa = S("_ti", void 0, 0), Wa = S("_to", void 0, 20);
+    var Nc = S("expId", "xid"),
+        Oc = S("expVar", "xvar"),
+        Rc = S("_utma", "_utma"),
+        Sc = S("_utmz", "_utmz"),
+        Tc = S("_utmht", "_utmht"),
+        Ua = S("_hc", void 0, 0),
+        Xa = S("_ti", void 0, 0),
+        Wa = S("_to", void 0, 20);
+
+    //定制的维度和指标：每个自定义维度有一个相关的指数。有一个最大的20个自定义维度(200为溢价账户)。后缀名必须是一个正整数1到200(含200)之间的。
     cb("dimension([0-9]+)", function (a) {
         return new bb(a[0], "cd" + a[1])
     });
+
+    //定制的维度和指标：每个自定义指标有一个相关的指数。有一个最大的20个自定义指标(200为溢价账户)。后缀名必须是一个正整数1到200(含200)之间的。
     cb("metric([0-9]+)", function (a) {
         return new bb(a[0], "cm" + a[1])
     });
@@ -737,6 +866,8 @@
     S("usage", "_u", void 0, function () {
         return pa.M()
     }, db);
+
+    //常规：强制使用 https 信标方式发送计数的URL
     S("forceSSL", void 0, void 0, function () {
         return Ba
     }, function (a, b, c) {
@@ -752,8 +883,53 @@
         }, b.p = void 0);
         return b
     });
-    var Qb = T("oot"), dd = S("previewTask"), Rb = S("checkProtocolTask"), Sb = S("checkStorageTask"), Uc = S("historyImportTask"), Tb = S("samplerTask"), Vb = T("rateLimiterTask"), Wb = S("buildHitTask"), Xb = S("sendHitTask"), Vc = S("ceTask"), V = T("name"), Q = T("clientId", "cid"), Na = T("trackingId", "tid"), U = T("cookieName", void 0, "_ga"), W = T("cookieDomain"), Yb = T("cookiePath", void 0, "/"), Zb = T("cookieExpires", void 0, 63072E3), $b = T("legacyCookieDomain"), Wc = T("legacyHistoryImport", void 0, !0), ac = T("storage", void 0, "cookie"), bc = T("allowLinker",
-        void 0, !1), cc = T("allowAnchor", void 0, !0), Ka = T("sampleRate", "sf", 100), dc = T("siteSpeedSampleRate", void 0, 1), ec = T("alwaysSendReferrer", void 0, !1);
+    var Qb = T("oot"),
+        dd = S("previewTask"),
+        Rb = S("checkProtocolTask"),
+        Sb = S("checkStorageTask"),
+        Uc = S("historyImportTask"),
+        Tb = S("samplerTask"),
+        Vb = T("rateLimiterTask"),
+        Wb = S("buildHitTask"),
+        Xb = S("sendHitTask"),
+        Vc = S("ceTask"),
+
+        //只能通过create方法创建：跟踪对象名称
+        V = T("name"),
+
+        //只能通过create方法创建：匿名标识一个浏览器实例。默认情况下,这个值是作为第一方cookie存储、分析跟踪，两年到期。
+        Q = T("clientId", "cid"),
+        Na = T("trackingId", "tid"),
+
+        //只能通过create方法创建：用于存储分析数据的cookie名称
+        U = T("cookieName", void 0, "_ga"),
+
+        //只能通过create方法创建：指定用来存储分析cookie的域。
+        W = T("cookieDomain"),
+
+        //
+        Yb = T("cookiePath", void 0, "/"),
+
+        //只能通过create方法创建：指定cookie过期时间,单位为秒。
+        Zb = T("cookieExpires", void 0, 63072E3),
+
+        //只能通过create方法创建：遗留Cookie域。这个字段是用来配置 analytics.js 如何搜索早期 Google Analytics 生成的cookie跟踪脚本如ga.js和urchin.js。
+        $b = T("legacyCookieDomain"),
+        Wc = T("legacyHistoryImport", void 0, !0),
+        ac = T("storage", void 0, "cookie"),
+        bc = T("allowLinker", void 0, !1),
+
+        //只能通过create方法创建：允许锚点参数
+        cc = T("allowAnchor", void 0, !0),
+
+        //只能通过create方法创建：抽样率
+        Ka = T("sampleRate", "sf", 100),
+
+        //只能通过create方法创建：网站速度采样率
+        dc = T("siteSpeedSampleRate", void 0, 1),
+
+        //只能通过create方法创建：总是发送推荐源(Referrer)
+        ec = T("alwaysSendReferrer", void 0, !1);
 
     /**
      * 将 analytics.js 中的属性和方法赋给 window.命名空间
@@ -817,15 +993,20 @@
             -1 < e[v][t]("Shockwave Flash") && (b = e.description)
         }
         if (!b)try {
-            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7"), b = a.GetVariable("$version")
+            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7"),
+            b = a.GetVariable("$version")
         } catch (g) {
         }
         if (!b)try {
-            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6"), b = "WIN 6,0,21,0", a.AllowScriptAccess = "always", b = a.GetVariable("$version")
+            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6"),
+            b = "WIN 6,0,21,0",
+            a.AllowScriptAccess = "always",
+            b = a.GetVariable("$version")
         } catch (ca) {
         }
         if (!b)try {
-            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash"), b = a.GetVariable("$version")
+            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash"),
+            b = a.GetVariable("$version")
         } catch (l) {
         }
         b && (a = b[m](/[\d]+/g)) && 3 <= a[y] && (b = a[0] + "." + a[1] + " r" + a[2]);
@@ -847,7 +1028,8 @@
             }
         },
         Ec = function (a) {
-            var b = O.performance || O.webkitPerformance, b = b && b.timing;
+            var b = O.performance || O.webkitPerformance,
+                b = b && b.timing;
             if (!b)return!1;
             var c = b.navigationStart;
             if (0 == c)return!1;
@@ -885,7 +1067,9 @@
                 var d = ic(P(a, W)), e = jc(P(a, Yb));
                 1 < e && (d += "-" + e);
                 c = ["GA1", d, c][H](".");
-                var d = kc(P(a, Yb)), e = lc(P(a, W)), g = 1E3 * R(a, Zb);
+                var d = kc(P(a, Yb)),
+                    e = lc(P(a, W)),
+                    g = 1E3 * R(a, Zb);
                 a = P(a, Na);
                 zc(b, c, d, e, a, g) && (hc = !0)
             }
@@ -954,7 +1138,9 @@
     }
 
     function Ic(a, b) {
-        for (var c = new Date, d = O.screen || {}, e = O[oa], g = e.plugins || [], c = [a, e.userAgent, d.width, d.height, c.getTimezoneOffset(), c.getYear(), c.getDate(), c.getHours(), c.getMinutes() + b], d = 0; d < g[y]; ++d)c[p](g[d].description);
+        for (var c = new Date, d = O.screen || {}, e = O[oa], g = e.plugins || [], c = [a, e.userAgent, d.width, d.height, c.getTimezoneOffset(), c.getYear(), c.getDate(), c.getHours(), c.getMinutes() + b], d = 0; d < g[y]; ++d){
+            c[p](g[d].description);
+        }
         return La(c[H]("."))
     }
 

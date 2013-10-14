@@ -10,6 +10,8 @@ Google Analytics
 
 监测埋点
 --
+当启用了 JavaScript 的浏览器加载附带 Google Analytics（分析）标记（ga.js 或 analytics.js）的网页时，将以异步方式执行两项操作：加载并处理 Google Analytics（分析）函数队列和请求 Google Analytics（分析）JavaScript。函数队列是一个 JavaScript 数组，用于推送不同的 Google Analytics（分析）配置和数据收集函数。这些函数由网站所有者在实施 Google Analytics（分析）时设置，可能包含的功能有指定 Google Analytics（分析）帐号，以及将网页浏览数据实际发送给 Google Analytics（分析）收集网络以便处理。
+
 原始代码
 
       <script>
@@ -30,7 +32,7 @@ Google Analytics
 	        i['GoogleAnalyticsObject'] = r; //定义谷歌的命名空间 ‘ga'
 	
 	        /*
-	        初始化 window.ga.q 的 argument 队列
+	        初始化Google Analytics（分析）函数队列
 	         */
 	        i[r] = i[r] || function () {
 	            (i[r].q = i[r].q || []).push(arguments)
@@ -39,7 +41,7 @@ Google Analytics
 	        i[r].l = 1 * new Date(); //创建ga <script>标签时的时间戳
 	
 	        /*
-	        引入analytics.js
+	        请求 Google Analytics（分析）JavaScript(analytics.js)
 	         */
 	        a = s.createElement(o),
 	        m = s.getElementsByTagName(o)[0];
@@ -60,6 +62,9 @@ analytics.js分析
 --
 ![](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/send_request.jpg)
 --
+
+以附加到 HTTP 请求的网址参数的形式发送数据。
+
 根据计数请求URL中参数长度和浏览器，从信标(即通过1x1 img的src属性)、XDomainRequest异步请求和iframe的src属性三种方式中选取一种方式发送计数请求。上图中为使用信标方式发送计数请求。
 
 http://www.google-analytics.com/collect?v=1&_v=j13&a=994561489&t=pageview&_s=1&dl=http%3A%2F%2Fweb.example.com%2Findex.html&ul=zh-cn&de=UTF-8&dt=test&sd=32-bit&sr=1440x900&vp=1440x445&je=1&fl=11.8%20r800&_u=ME~&cid=1568799843.1381222720&tid=UA-44687225-1&z=1013138030
@@ -110,3 +115,9 @@ Google Analytics中的监测指标
 
 ### 次级维度 ###
 ![](https://raw.github.com/clientlab/analytics/master/google-analytics-2013/img/secondary_dimension.jpg)
+
+参考
+--
+
+- https://developers.google.com/analytics/devguides/collection/analyticsjs/?hl=zh-CN
+- https://support.google.com/analytics/answer/2763052
