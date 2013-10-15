@@ -72,13 +72,13 @@
 			if (arguments.length < 2) return arguments[0];
 			var a = arguments[0],
 			b;
-			for (var c = 1,
-			d = arguments.length; c < d; c++) {
+			for (var c = 1,	d = arguments.length; c < d; c++) {
 				b = arguments[c];
 				for (var e in b) a[e] = b[e]
 			}
 			return a
 		},
+		//元素添加事件
 		bindEvent: function(a, b, c) {
 			return a.attachEvent ? a.attachEvent("on" + b, c) : a.addEventListener(b, c, !1),
 			a
@@ -91,6 +91,7 @@
 				return Object.prototype.toString.call(filter) === "[object Function]" ? filter(value, key) : value
 			})
 		},
+		//向服务器发请求的函数，一般用于向服务器发送数据而不请求js的情况，请求方式为图片请求，参数说明：a:请求url，b:回调函数
 		track: function(a, b) {
 			var c = new Image,
 			d = "__clicki_track_" + Math.floor(Math.random() * 2147483648).toString(36);
@@ -116,6 +117,7 @@
 			},
 			c.src = a
 		},
+		//文档dom就绪的判断
 		domReady: function() {
 			function f() {
 				if (!d) {
@@ -148,18 +150,17 @@
 					}
 					f()
 				} (),
-				b.opera && document.addEventListener("DOMContentLoaded",
-				function() {
+				b.opera && document.addEventListener("DOMContentLoaded", function() {
 					if (d) return;
 					for (var a = 0; a < document.styleSheets.length; a++) if (document.styleSheets[a].disabled) {
 						setTimeout(arguments.callee, 0);
 						return
 					}
 					f()
-				},
-				!1);
+				},!1);
 				if (b.safari) {
-					var a; (function() {
+					var a;
+					(function() {
 						if (d) return;
 						if (document.readyState != "loaded" && document.readyState != "complete") {
 							setTimeout(arguments.callee, 0);
@@ -217,6 +218,7 @@
 			};
 			this.__userConfigLoop = setTimeout(f, 1e3)
 		},
+		//siteTracker对象初始化之后执行在对象registry.boot中注册的模块的动作
 		boot: function() {
 			var a = 0,
 			b = 0,
@@ -241,6 +243,7 @@
 			return a === b && (this.booted = !0),
 			this
 		},
+		//dom就绪后执行在对象的registry.ready中注册的模块的动作
 		ready: function() {
 			var a = 0,
 			b = 0,
@@ -269,14 +272,14 @@
 			a === b && (this.readyed = !0),
 			this
 		},
+		//在window的load事件中执行在对象的registry.load中注册的模块的动作
 		load: function() {
 			var a = 0,
 			b = 0;
 			for (var c in this.registry.load) a++;
 			var d, e;
 			return window.addEventListener ? (d = "addEventListener", e = "load") : (d = "attachEvent", e = "onload"),
-			window[d](e,
-			function(c) {
+			window[d](e, function(c) {
 				return function() {
 					for (var d in c.registry.load) {
 						if (!{}.hasOwnProperty.call(c.registry.load, d)) continue;
@@ -335,7 +338,7 @@
 			} else window.console && console.warn && console.warn("_trackMetrics参数错误:", arguments)
 		}
 	};
-
+//***************************************start seajs**************************************
 	var _seajsHost = {
 		location: window.location
 	}; 
@@ -833,12 +836,16 @@
 			}
 		} (a, a._data, a._fn, this)
 	})).apply(_seajsHost);
+//***************************************end seajs**************************************
 
+	//创建seajs的全局标示符Clicki，并使Clicki继承clicki
 	var Clicki = _seajsHost.seajs.noConflict(!0);
 	delete _seajsHost;
 	var _Clicki = new clicki;
 	for (var n in _Clicki) Clicki[n] = _Clicki[n];
 
+	//Clicki的初始化函数，首先执行了类clicki的init函数，然后使Clicki继承siteTracker，并执行siteTracker的init函数。
+	//该函数使seajs、clicki、siteTracker三个类的功能都集中到了Clicki对象中。
 	Clicki.New = function(a) {
 		this.defaultTracker || Clicki.init(a);
 		var b = new siteTracker(a);
@@ -982,6 +989,7 @@
 		}
 	}),
 
+	//is_new:是否新访客
 	Clicki.define("~/Visitor", null, function(require, exports) {
 		var a = require("~/Cookie"),
 		b = new Date,
@@ -1003,13 +1011,15 @@
 		}
 	}),
 
+	//来源
 	Clicki.define("~/Referer", null, function(require, exports) {
 		exports.url = document.referrer
 	}),
 
+	//页面url、域、title、服务器访问时间、js load时间
 	Clicki.define("~/Page", null, function(require, exports) {
 		var a = function(a) {
-			var b = a.time,
+			var b = a.time,				//服务器返回的访问时间
 			c = (new Date).getTime(),
 			d = b > 0 ? c - b: 0,
 			e = {
@@ -1041,9 +1051,9 @@
 
 	Clicki.define("~/CustomTrack", null, function(require, exports) {
 		var a = function(a) {
-			var b = "_CiT" + a,
-			c = window[b] || [];
-			return window[b] = [],
+			var b = "_CiT" + a, 
+				c = window[b] || [];
+			return window[b] = [], 
 			Clicki.defaultTracker.site_id == a && window._CiT && window._CiT.length > 0 && (c = c.concat(window._CiT), window._CiT = []),
 			Clicki.IS_HEATMAP || !c || !c.length ? [] : c
 		},
@@ -1058,23 +1068,24 @@
 		}
 	}),
 
+	//动作监测模块
 	Clicki.define("~/ActionTrack", null, function(require, exports) {
-		var a = function() {
-			var a = {
-				clicks: 1,
-				inputs: 2,
-				innner_clickis: 3,
-				outer_clickis: 4,
-				inactive_period: 5
+		var a = function() {			//动作监测初始化
+			var a = {					//监测了那些动作
+				clicks: 1,				//点击数
+				inputs: 2,				//输入数
+				innner_clickis: 3,		//跳入次数
+				outer_clickis: 4,		//跳出次数
+				inactive_period: 5 		//
 			},
-			b = {},
+			b = {},						//记录各种监测次数的对象
 			c = /^(http:\/\/|https:\/\/|ftp:\/\/)/i,
 			d = /^javascript:/i,
 			e = [],
 			f = (new Date).getTime(),
 			g = f,
 			h = 0,
-			i = function(a, c) {
+			i = function(a, c) {		//记录监测次数总数的函数，a:监测动作的名称，c:动作发生的次数
 				c = c || 1,
 				b[a] === undefined && (b[a] = 0),
 				b[a] += c
@@ -1091,41 +1102,37 @@
 				return h = 0,
 				a
 			};
-			Clicki.bindEvent(window.document, "click",
-			function(b) {
+			Clicki.bindEvent(window.document, "click", function(b) {	//document元素添加click事件，监测跳转的去向
 				j(!0),
 				b = b || window.event;
 				var f = b.srcElement ? b.srcElement: b.target,
 				g = (f.tagName || f.nodeName || "").toUpperCase();
 				i(a.clicks);
-				if (g === "A" && f.href) 
-					if (c.test(f.href)) {
-						var h = f.href.indexOf(window.location.host);
+				if (g === "A" && f.href) 	
+					if (c.test(f.href)) {	//如果href是以http或https或ftp开头，如果href中包含页面域名并至少在第8个字符开始（https://）,则是内部链接，否则是外部链接
+						var h = f.href.indexOf(window.location.host);	
 						h > -1 && h <= 8 ? i(a.innner_clickis) : i(a.outer_clickis)
-					} else d.test(f.href) || i(a.innner_clickis);
+					} else d.test(f.href) || i(a.innner_clickis);	//不是以协议名开头的，判断是否是javascript动作，如果不是，则认为是内部跳转
 				var k, l;
 				Clicki.browser.msie ? (l = Math.max(document.documentElement.scrollTop, document.body.scrollTop), k = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft), k = b.clientX + k, l = b.clientY + l) : (k = b.pageX, l = b.pageY);
 				var m = Math.max(document.body.scrollWidth, document.body.offsetWidth, document.body.clientWidth),
 				n = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.body.clientHeight);
-				k > 0 && l > 0 && k <= m && l <= n && e.push([k, l, m])
+				k > 0 && l > 0 && k <= m && l <= n && e.push([k, l, m])	//保存ie下的点击坐标，和所有情况下的页面宽度
 			}),
-			Clicki.bindEvent(window.document, "keyup",
-			function(b) {
+			Clicki.bindEvent(window.document, "keyup", function(b) {	//document元素添加click事件，监测输入次数
 				j(!0),
 				b = b || window.event,
 				i(a.inputs)
 			}),
-			Clicki.bindEvent(window.document, "mousemove",
-			function(a) {
+			Clicki.bindEvent(window.document, "mousemove", function(a) {
 				j(!0)
 			});
-			var l = function(c) {
+			var l = function(c) {	//取得监测到的动作数据
 				var d = b,
 				f = [],
 				g = k();
 				b = {};
-				if (Clicki.IS_HEATMAP) return delete d,
-				f;
+				if (Clicki.IS_HEATMAP) return delete d, f;
 				var h, i = 2;
 				for (var j in d) {
 					h = {
@@ -1150,7 +1157,7 @@
 				return ! 1
 			};
 			return {
-				getActionTrackData: l,
+				getActionTrackData: l,		
 				needTrack: m
 			}
 		};
@@ -1160,11 +1167,15 @@
 			}
 		}
 	}),
-
+	
+	//sessionTimelist维护一个每次访问页面时的客户端时间列表，格式为this.sessionId.toString(36) + "_" + (new Date).getTime().toString(36)
+	//其中this.sessionId为用户首次访问页面的服务器时间，维护这个列表的目的是判断用户是否活跃，即visitor.is_active的值，
+	//此属性初值为0,在checkActive函数中判断，如果用户本次访问与最近的三次中任何一次的时间差超过五天，则置is_active为0
+	//timelist时间列表的值保存在名为__c_sesslist_+ site_id的cookie中
 	Clicki.define("~/SessionTimeList", null, function(require, exports) {
 		var a = require("~/Cookie"),
-		b = 432e3,
-		c = function(b, c) {
+		b = 432e3, //5天
+		c = function(b, c) {	//把cookie中保存的sessionTime时间列表存入当前对象的timelist队列中
 			this.sesslistKey = "__c_sesslist_" + c,
 			this.isActiveKey = "__c_isactive_" + c,
 			this.uactiveatKey = "__c_uactiveat_" + c;
@@ -1179,24 +1190,25 @@
 			this.sessionId = parseInt(b, 10),
 			this.siteId = c
 		};
-		return c.prototype.add = function(a) {
+		return c.prototype.add = function(a) {//新生成一个sessionTime加入timelist队列尾
 			var b = parseInt(a.getTime() / 1e3 / 86400),
 			b = this.sessionId.toString(36) + "_" + b.toString(36);
 			b !== this.timeList[0] && (this.timeList.unshift(b), this._isChanged = !0)
 		},
-		c.prototype.addNow = function() {
+		c.prototype.addNow = function() {//以当前时间新生成一个sessionTime加入timelist队列尾
 			this.add(new Date)
 		},
-		c.prototype.save = function(c) {
+		c.prototype.save = function(c) {//把timelist队列中的前10个保存到cookie中
 			if (this._isChanged || c) {
 				var d = encodeURIComponent(this.timeList.slice(0, 10).join(","));
 				a.set2(this.siteId, this.sesslistKey, d, b, "/")
 			}
 		},
-		c.prototype.checkActive = function(b) {
+		//判断cookie中活跃值，如果为1，则根据b值返回2或3，如果不为1，则可能超过五天或cookie被清空等，此时利用timelist中最近三次的访问时间
+		//判断是否超过五天，来确定is_active的值
+		c.prototype.checkActive = function(b) {	//b==true: 今天没有访问；b==false：今天有访问
 			var c = a.get(this.isActiveKey);
-			if (c === "1") return this.updateActive(),
-			b ? 2 : 3;
+			if (c === "1") return this.updateActive(), b ? 2 : 3;
 			var d = parseInt((new Date).getTime() / 1e3 / 86400);
 			for (var e = 0; e < 3; e++) {
 				var f = String(this.timeList[e] || "0_1").split("_");
@@ -1210,7 +1222,7 @@
 			return g || a.set2(this.siteId, this.uactiveatKey, (new Date).getTime(), 36e7, "/"),
 			1
 		},
-		c.prototype.updateActive = function() {
+		c.prototype.updateActive = function() {//更新cookie中活跃度的值1，保存时间5天
 			a.set2(this.siteId, this.isActiveKey, "1", b, "/")
 		},
 		{
@@ -1228,9 +1240,9 @@
 			l = "__c_today_" + g.site_id,
 			m = "__c_session_at_" + g.site_id,
 			n = "__c_last_" + g.site_id,
-			o = a.Get(g),
-			p = c.Get(g),
-			q = b.get(h),
+			o = a.Get(g), 	//Visitor对象{id, is_new, is_active}
+			p = c.Get(g),	//page对象{data: {url, domain, title, server_time, loadtime}}
+			q = b.get(h),	//从cookie中获取sessionid
 			r = 0,
 			s = 0,
 			t = b.get(i),
@@ -1241,37 +1253,38 @@
 			y = g.time,
 			z = 0,
 			A = b.get(n);
-			if (!q) q = g.millisecond;
-			else {
-				var B = Number(b.get(m)); ! isNaN(B) && B > 13330104798 && x - B > 12e5 && (q = g.millisecond, b.set2(g.site_id, m, ""), t = 0)
+			if (!q) q = g.millisecond;		//本次访问的服务器时间millisecond作为session_id的值
+			else {							//如果距离上次心跳的时间超过20分钟，则认为是一次新的访问
+				var B = Number(b.get(m)); 
+				!isNaN(B) && B > 13330104798 && x - B > 12e5 && (q = g.millisecond, b.set2(g.site_id, m, ""), t = 0)
 			}
-			var C = f.New(q, g.site_id);
-			C.addNow(),
-			C.save();
-			var D = C.checkActive(!v);
-			o.is_active = D;
-			var E = 86400 - w.getHours() * 3600 - w.getMinutes() * 60 - w.getSeconds();
-			return t++,
+			var C = f.New(q, g.site_id);	//创建了一个sessionTimelist对象
+			C.addNow(),						//用当前时间创建一个sessionTime加入timelist队列中
+			C.save();						//timelist队列的值存入cookie
+			var D = C.checkActive(!v);		//判断用户活跃度
+			o.is_active = D;				//用户活跃度赋值给Visitor对象的is_active属性
+			var E = 86400 - w.getHours() * 3600 - w.getMinutes() * 60 - w.getSeconds();		//今天的剩余时间
+			return t++,						//pv次数加1
 			v || z++,
 			t == 1 && (v++, u++),
 			o.is_new && (u = 0),
 			b.set2(g.site_id, i, t),
-			b.set2(g.site_id, h, q),
-			b.set2(g.site_id, l, v, E, "/"),
+			b.set2(g.site_id, h, q),		//第一次访问时的millisecond(服务器返回时间)作为session_id的值，并存入cookie
+			b.set2(g.site_id, l, v, E, "/"),//今天的访问次数存cookie今天的剩余时间数
 			b.set2(g.site_id, k, u, 36e7, "/"),
 			b.set2(g.site_id, n, y, 36e7, "/"),
 			b.set2(g.site_id, "__c_visitor", o.id, 36e7, "/"),
 			{
-				flow_key: j(),
-				site_id: g.site_id,
-				session_id: q,
-				flow_id: t,
-				visitor: o,
-				today: v,
-				review: u,
-				referer: d,
-				page: p.data,
-				client: e,
+				flow_key: j(),				//随机数
+				site_id: g.site_id,			//网站id
+				session_id: q,				//本次会话的id，本次回话开始时访问服务器的时间
+				flow_id: t,					//本次会话的总访问页面数
+				visitor: o,					//visitor对象，三个属性 id：用户标识，用户第一次访问网站的服务器时间, is_new：用户是否是新访客, is_active：用户处于的活跃状态。
+				today: v,					//今天的访问次数
+				review: u,					//10万小时内回访次数
+				referer: d,					//页面来源
+				page: p.data,				//page对象，五个属性 url, domain, title, server_time，loadtime
+				client: e,					//client对象, agent, screen.width, screen.height, screen.size
 				refresh: function(a) {
 					t++,
 					b.set2(g.site_id, i, t),
@@ -1297,15 +1310,16 @@
 		d = require("~/Referer"),
 		e = require("~/Client"),
 		f = require("~/SessionTimeList"),
-		h = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-		for (var i = 0; i < 26; i++) h.push(String.fromCharCode(97 + i), String.fromCharCode(65 + i));
+		h = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];		
+		for (var i = 0; i < 26; i++) h.push(String.fromCharCode(97 + i), String.fromCharCode(65 + i));	//h是数字字母表数组
 		return {
 			New: function(a) {
 				return g(a)
 			}
 		}
 	}),
-
+	
+	//客户端Client模块，收集信息：浏览器信息，屏幕宽高，页面大小的指标
 	Clicki.define("~/Client", null, function(require, exports) {
 		var a = document,
 		b = a.compatMode === "CSS1Compat" ? a.documentElement: a.body,
@@ -1405,12 +1419,12 @@
 			}
 		},
 		{
-			init: function(a) {
-				var b = new f(a);
+			init: function(a) {								//
+				var b = new f(a);							//创建Observer的对象
 				return a.Observer = b,
-				b.track(0),
-				b.trackTimer.start(),
-				Clicki.bindEvent(window, "beforeunload",
+				b.track(0),									//发送收集的数据给服务器track(0)
+				b.trackTimer.start(),						//启动心跳，心跳发送函数track(2)
+				Clicki.bindEvent(window, "beforeunload",	//添加事件在页面退出时告知服务器track(1)
 				function() {
 					b.track(1)
 				}),
@@ -1468,6 +1482,7 @@
 		}
 	}),
 
+	//加载conf.jscode中js的模块
 	Clicki.define("~/LoadJsCode", null, function(require, exports) {
 		var a = function(a) {
 			if (!a || !a.items) return null;
