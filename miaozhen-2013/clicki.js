@@ -858,9 +858,10 @@
 	},
 
 	Clicki.define("~/Cookie", null, function(require, exports) {
-		function b() {
-			if (a) return a;
-			var b = function(a) {
+		/* 功能：获取document.domain的根级域名 */
+		function b() {		
+			if (a) return a;	//a保存了已经获得的根级域名
+			var b = function(a) {	//判断参数a是否是一个域名
 				var b = "__c_rootdomin_test__";
 				document.cookie = b + "=1;domain=" + a + ";";
 				var c = document.cookie.match(new RegExp("(^| )" + b + "=([^;]*)(;|$)"));
@@ -874,13 +875,18 @@
 			d = c.split(".").length,
 			e = c;
 			while (b(c) && d > 0) e = c,
-			c = c.replace(/^[^\.]+\./, ""),
+			c = c.replace(/^[^\.]+\./, ""),		//把一个域名的第一个小数点和它之前的字符去掉，判断剩余的字符是否还是一个域名，如此往复循环，找出根级域名
 			d--;
 			return a = e,
 			e
 		}
-		var a = "",
-		c = function(a) {
+		var a = "",		//保存第一次执行b函数后获得的根级域名，以后不需要重复执行b函数
+		/* 功能：获取或设置cookie
+		 * 参数只有一个时，获取cookie, 参数即cookie名
+		 * 参数大于一个时，设置cookie，此时的参数列表： name, value, expire, path, domain, secure
+		 * expire默认值为0，path默认值为'/', domain默认值0，secure默认值0
+		 */
+		c = function(a) {	
 			var b = new Date,
 			c = arguments,
 			d = c.length;
@@ -896,13 +902,16 @@
 			var i = document.cookie.match("(?:^|;)\\s*" + a + "=([^;]*)");
 			return i ? unescape(i[1]) : 0
 		};
-		exports.get = function(a) {
+		/* 获取cookie */
+		exports.get = function(a) {		
 			return c(a)
 		},
+		/* 设置cookie, 参数中的域名不存在时，使用根级域名 */
 		exports.set = function(a, d, e, f, g, h) {
 			return ! g && Clicki.COOKIE_USE_ROOT_DOMAIN && (g = b(), window.document.domain !== g && (g = "." + g)),
 			c(a, d, e, f, g, h)
 		},
+		/* 设置cookie, 第一个参数是网站id, j始终为false */
 		exports.set2 = function(a, d, e, f, g, h, i) {
 			var j = Clicki[a] && Clicki[a].COOKIE_USE_ROOT_DOMAIN;
 			return ! h && j && (h = b(), window.document.domain !== h && (h = "." + h)),

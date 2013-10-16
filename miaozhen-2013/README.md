@@ -97,8 +97,8 @@ dom加载完成后，document添加click事件，判断时间源是否是a元素
 "~Cookie"模块对外提供三个接口：
 
 + get: 根据名称获取cookie值。
-+ set:
-+ set2: 
++ set: 设置cookie(此代码中没有调用这个函数)。
++ set2: 设置cookie, 参数列表： site_id, name, value, expire, path, domain, secure
 
 ## Client ##
 "~Client"模块提供客户端信息：
@@ -138,10 +138,10 @@ track(0)额外发送的数据：
 + lt: js加载时间
 
 ## AppEngine ##
-"~AppEngine"模块加载额外的程序代码的，要加载的js在CLICKI_CF.widgets中配置，在飞利浦的秒针代码中没有加载其他程序代码。
+"~AppEngine"模块加载额外的程序代码的，要加载的js在CLICKI_CF.widgets中配置，此代码没有用到这个功能。
 
 ## LoadJsCode ##
-"~LoadJsCode"模块加载额外的js文件，要加载的js在CLICKI_CF.jscode中配置，在飞利浦的秒针代码中没有加载额外的js。
+"~LoadJsCode"模块加载额外的js文件，要加载的js在CLICKI_CF.jscode中配置，此代码没有用到这个功能。
 
 
 
