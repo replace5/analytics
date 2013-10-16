@@ -10,7 +10,7 @@ Google Analytics
 
 监测埋点
 --
-当启用了 JavaScript 的浏览器加载附带 Google Analytics（分析）标记（ga.js 或 analytics.js）的网页时，将以异步方式执行两项操作：加载并处理 Google Analytics（分析）函数队列和请求 Google Analytics（分析）JavaScript。函数队列是一个 JavaScript 数组，用于推送不同的 Google Analytics（分析）配置和数据收集函数。这些函数由网站所有者在实施 Google Analytics（分析）时设置，可能包含的功能有指定 Google Analytics（分析）帐号，以及将网页浏览数据实际发送给 Google Analytics（分析）收集网络以便处理。
+当启用了 JavaScript 的浏览器加载附带 Google Analytics（分析）标记（ga.js 或 analytics.js）的网页时，将以异步方式执行两项操作：加载并处理 Google Analytics（分析）函数队列和请求 Google Analytics（分析）JavaScript。函数队列是一个 JavaScript 数组，用于推送不同的 Google Analytics（分析）配置和数据收集函数。这些函数由网站所有者在.实施 Google Analytics（分析）时设置，可能包含的功能有指定 Google Analytics（分析）帐号，以及将网页浏览数据实际发送给 Google Analytics（分析）收集网络以便处理。
 
 原始代码
 
@@ -50,7 +50,7 @@ Google Analytics
 	        m.parentNode.insertBefore(a, m)
 	    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 	
-	    ga('create', 'UA-44687225-1', 'example.com');   //创建跟踪对象, UA-44687225-1 为跟踪id
+	    ga('create', 'UA-44687225-1', 'example.com');   //创建一个跟踪对象, UA-44687225-1 为跟踪id
 	    ga('send', 'pageview'); //发送URL的默认数据到 Google Analytics
 	</script>
 

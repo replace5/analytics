@@ -728,16 +728,16 @@
     S("description", "cd");
 
     var
-    //内容信息：指定完整的URL(不含锚)的页面。由 create 方法初始化。
+    //Page Tracking 内容信息：指定完整的URL(不含锚)的页面。由 create 方法初始化。
         kb = S("location", "dl", ""),
 
         //流量来源：指定推荐源
         lb = S("referrer", "dr"),
 
-        //内容信息：页面URL的路径部分。应该使用‘/’开始，指定虚拟页面路径。
+        //Page Tracking 内容信息：页面URL的路径部分。应该使用‘/’开始，指定虚拟页面路径。
         mb = S("page", "dp", "");
 
-    //内容信息：指定存储内容的主机名。
+    // 内容信息：指定存储内容的主机名。
     S("hostname", "dh");
     var
         //系统信息：用户浏览器或系统语言。 由 create 方法初始化。
@@ -746,7 +746,7 @@
         //系统信息：指定页面/文档使用的字符集编码。由 create 方法初始化。
         ob = S("encoding", "de");
 
-    //内容信息：网页/文档的标题。默认文档标题。
+    //Page Tracking 内容信息：网页/文档的标题。默认文档标题。
     S("title", "dt", function () {
         return M.title || void 0
     });
@@ -790,25 +790,25 @@
 
 
     var
-        //事件跟踪：指定事件类别。不能为空。
+        //Event Tracking 事件跟踪：指定事件类别。不能为空。
         ub = S("eventCategory", "ec"),
 
-        //事件跟踪：指定事件动作。不能为空。
+        //Event Tracking 事件跟踪：指定事件动作。不能为空。
         xb = S("eventAction", "ea"),
 
-        //事件跟踪：指定事件标签。
+        //Event Tracking 事件跟踪：指定事件标签。
         yb = S("eventLabel", "el"),
 
-        //事件跟踪：指定事件的价值。值必须是非负数。
+        //Event Tracking 事件跟踪：指定事件的价值。值必须是非负数。
         zb = S("eventValue", "ev"),
 
-        //社交互动：指定了社交网络,例如 Facebook 或 Google Plus 。需要 social 冲击类型。
+        //Social Interactions 社交互动：指定了社交网络,例如 Facebook 或 Google Plus 。需要 social 冲击类型。
         Bb = S("socialNetwork", "sn"),
 
-        //社交互动：指定社交活动。例如在 Google Plus 上当用户点击“+ 1”按钮,社交活动是“plus”。需要 social 冲击类型。
+        //Social Interactions 社交互动：指定社交活动。例如在 Google Plus 上当用户点击“+ 1”按钮,社交活动是“plus”。需要 social 冲击类型。
         Cb = S("socialAction", "sa"),
 
-        //社交互动：社交活动的目标。通常是一个URL也可以是一段文本。需要 social 冲击类型。
+        //Social Interactions 社交互动：社交活动的目标。通常是一个URL也可以是一段文本。需要 social 冲击类型。
         Db = S("socialTarget", "st"),
         Eb = S("l1", "plt"),
         Fb = S("l2", "pdt"),
@@ -819,16 +819,16 @@
         Kb = S("l7", "dit"),
         Lb = S("l8", "clt"),
 
-        //定时：指定用户定时类别。
+        //User Timings 用户计时：指定用户定时类别。
         Mb = S("timingCategory", "utc"),
 
-        //定时：指定用户定时变量名称。
+        //User Timings 用户计时：指定用户定时变量名称。
         Nb = S("timingVar", "utv"),
 
-        //定时：指定用户定时标签。
+        //User Timings 用户计时：指定用户定时标签。
         Ob = S("timingLabel", "utl"),
 
-        //定时：指定用户时间值。该值以毫秒为单位。
+        //User Timings 用户计时：指定用户时间值。该值以毫秒为单位。
         Pb = S("timingValue", "utt");
 
     //应用跟踪：指定应用程序名称。只在应用视图(配置文件)可见。
@@ -862,6 +862,8 @@
     cb("metric([0-9]+)", function (a) {
         return new bb(a[0], "cm" + a[1])
     });
+
+    //Cross Domain Tracking ：链接参数
     S("linkerParam", void 0, void 0, Bc, db);
     S("usage", "_u", void 0, function () {
         return pa.M()
@@ -937,7 +939,10 @@
      */
     function Cc() {
         var a = $;
+
         X("create", a, a.create, 3);
+
+
         X("getByName", a, a.j, 5);
         X("getAll", a, a.K, 6);
         a = pc[z];
@@ -950,6 +955,8 @@
         (O.gaplugins = O.gaplugins || {}).Linker = Dc;
         a = Dc[z];
         Z.C("linker", Dc);
+
+        //
         X("decorate", a, a.Q, 20);
         X("autoLink", a, a.S, 25);
         Z.C("displayfeatures", fd)
@@ -1075,7 +1082,9 @@
             }
         },
         nc = function (a) {
-            if ("cookie" == P(a, ac) && !hc && (mc(a), !hc))throw"abort";
+            if ("cookie" == P(a, ac) && !hc && (mc(a), !hc)){
+                throw"abort";
+            }
         },
         Yc = function (a) {
             if (a.get(Wc)) {
@@ -1126,8 +1135,8 @@
     };
 
     /**
-     * 返回生成
-     * @param a cid
+     * Google Analytics 的 cookie值
+     * @param a {} clientid
      * @returns {string}
      * @constructor
      */
@@ -1144,10 +1153,22 @@
         return La(c[H]("."))
     }
 
+    /**
+     *  Linker
+     * @param a
+     * @constructor
+     */
     var Dc = function (a) {
         this.target = a
     };
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @returns {*}
+     * @constructor
+     */
     Dc[z].Q = function (a, b) {
         var c = /(.*)([?&#])(?:_ga=[^&]*)(?:&?)(.*)/.exec(a);
         c && 3 <= c[y] && (a = c[1] + (c[3] ? c[2] + c[3] : ""));
@@ -1156,6 +1177,12 @@
         return a
     };
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @constructor
+     */
     Dc[z].S = function (a, b) {
         function c(c) {
             try {
@@ -1376,18 +1403,20 @@
         };
 
     /**
-     *
-     * @param a
-     * @returns {*}
+     * Tracker Object Methods ：返回与给定字段关联的值。可以通过一个跟踪对象的实例调用。
+     * @param a fieldName {String} 要检索字段的名称
+     * @returns {String|Number|Object} 给定字段的值
      */
     pc[z].get = function (a) {
         return this.b.get(a)
     };
 
     /**
+     * Tracker Object Methods ：更新给定字段关联的值。也可以通过 ga('set', fieldObject); 的方式使用一组字段/值对实现批量更新
      *
-     * @param a
-     * @param b
+     * @param a fieldName {String} 设置字段的名称
+     * @param b value {String|Number|Object} 与给定字段关联的新值。
+     * @param fieldObject {Object} 一个包含一个或多个设置的字段/值对的对象。
      */
     pc[z].set = function (a, b) {
         this.b.set(a, b)
@@ -1405,8 +1434,10 @@
     };
 
     /**
+     *  Tracker Object Methods ：向谷歌收集服务器发送一个跟踪的信标。只允许用户覆盖这次冲击中一个或多个字段值的可选的字段对象。
      *
-     * @param a
+     * @param a hitType {String} 发送冲击的类型。支持的值有: pageview、event、social、timing
+     * @param opt_fieldObject {Object} 一个包含一个或多个字段/值对 用来覆盖这次冲击一个字段值的对象。这次冲击完成后，字段将恢复为初始值。
      */
     pc[z].send = function (a) {
         if (!(1 > arguments[y])) {
@@ -1616,8 +1647,10 @@
     var uc = [Na, W, V];
 
     /**
+     * ga Object Methods ：创建一个新的默认跟踪器对象。
      *
-     * @param a
+     * @param a trackingId {String} 被跟踪的网站web属性ID
+     * @param  opt_configObject {Object} 一个包含配置字段/值对的可选的对象。
      * @returns {*}
      */
     $.create = function (a) {
@@ -1634,17 +1667,18 @@
     };
 
     /**
-     *  getByName
-     * @param a
-     * @returns {*}
+     *  ga Object Methods ：getByName
+     *
+     * @param a name {String} 要获取的跟踪器的名字
+     * @returns {*} 一个跟踪器对象
      */
     $.j = function (a) {
         return $.h[a]
     };
 
     /**
-     *
-     * @returns {*}
+     * ga Object Methods ：getAll
+     * @returns {*}  一个所有跟踪对象的数组。
      * @constructor
      */
     $.K = function () {
