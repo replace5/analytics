@@ -1353,19 +1353,19 @@
 			this.tracker = a,
 			this.conf = a.conf,
 			this.lastTrackTime = (new Date).getTime(),
-			this.session = e.New(this.conf),
+			this.session = e.New(this.conf), 	//创建session对象
 			this.actionTrack = d.Get(),
 			this.sessionAtKey = "__c_session_at_" + a.conf.site_id;
 			var b = this,
 			c = {
 				_t: null,
-				heartbeatTrack: function() {
+				heartbeatTrack: function() {					//心跳执行函数
 					b.track(2)
 				},
-				start: function() {
-					c._t = setInterval(c.heartbeatTrack, 1e3)
+				start: function() {								//开启心跳
+					c._t = setInterval(c.heartbeatTrack, 1e3)	
 				},
-				stop: function() {
+				stop: function() {								//停止心跳
 					clearInterval(c._t)
 				}
 			};
@@ -1381,6 +1381,12 @@
 				b = "," + this.conf.cross_domains + ",";
 				return b.indexOf(a) < 0 ? !1 : !0
 			},
+			/* 功能: 组织参数，给服务器发请求
+			 * track的参数有三个取值： 0 ，1,2
+			 * track(0): 发送监测的信息数据给服务气，每访问一次页面发送一次
+			 * track(1): 发送退出信息给服务器, 页面退出时发送一次
+			 * track(2): 发送心跳信息给服务器， 1分钟发一次
+			 */
 			track: function(d) {
 				var e = (new Date).getTime() - this.lastTrackTime;
 				if (d === 2 && e < 6e4 && (!this.actionTrack.needTrack() || e < 1e4) && !c.needTrack(this.conf.site_id)) return;
