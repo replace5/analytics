@@ -5,17 +5,80 @@
 + one.js: 嵌入页面的js执行后向服务器请求的js文件。
 + clicki.js: one.js执行后，向服务器请求的js文件，是监测代码的主要js。
 
-## 前后台交互流程 ##
-1. 页面打开后，嵌入页面的js执行，以script标签的形式加载one.js（请求名称为网站id）。
-2. one.js执行后，还是以script标签的形式加载clicki.js，在one.js代码最后，提供了程序执行的入口。创建对象window.CClicki.New(CLICKI_CF)。
-3. CClicki对象初始化，以此执行在siteTracker类中注册的boot、ready、load配置中模块的初始化，开始检测，并向服务器第一次发送数据track(0)。
-4. track(0)之后开始发送心跳，每分钟一次track(2)。
-5. 页面退出时发送最后一次数据track(1)。
+## Js的执行流程 ##
 
-## clicki.js代码结构 ##
-第一部分：定义了两个类: 类clicki提供浏览器检测、事件添加、发送请求、文档就绪判断等功能，对不同浏览器进行了兼容处理；类siteTracker提供了对监测行为的控制。  
-第二部分：加入了类似seajs的模块化加载功能。把类clicki和类siteTracker和seajs的功能集中到了类Clicki中。  
-第三部分：把信息收集的行为分成几个模块进行处理，模块放在Clicki命名空间下。  
+### 嵌入的js ###
+嵌入的js创建script标签，加入到页面第一个script元素之前，加载js(src:秒针服务器地址+site_id)
+
+### one.js ###
+嵌入的js通过script标签引入one.js。one.js加载后立即执行。  
+one.js有三部分内容：
+
+1. 返回了配置信息
+
+		var CLICKI_CF = {
+	        version: '137655584',
+	        host: 'sitemonitor.cn.miaozhen.com',
+	        site_id: Number('45560'),
+	        site_name: "Philips%20Air%20Cleaner%20Summer",
+	        visitor_id: '1381370648523114',					//用户标识
+	        millisecond: '1381370648523114',				//session_id
+	        session_key: 'aq43oo',
+	        time: '1381370648523',							//服务器时间
+	        is_logined: true,
+	        rf_key: "dlnkwy7490",
+	        track_type: Number('0')||0,
+	        cross_domains: "",
+	        jscode: null,
+	        widgets: null
+	    };
+2. 引入clicki.js。创建script标签，加入到页面第一个script元素之前。clicki.js定义了window.CClicki。
+3. 设置一个定时器，创建window.CClicki的对象。
+
+### clicki.js ###
+
+1. 定义了两个类clicki和siteTracker。
+	#### Class clicki ####
+		属性： brower: 监测浏览器版本和是那种浏览器
+		方法： domReady: 文档就绪判断
+			  bindEvent: 元素添加事件
+			  track: 发请求（图片方式）
+	#### Class siteTracker ####
+		属性： conf: one.js中服务器传入的配置对象
+			  registry：{ //配置siteTracker对象初始化时要执行的模块
+				boot: {
+					"~/Observer": {
+						action: "init"
+					}
+				},
+				ready: {
+					"~/AppEngine": {
+						action: "init"
+					},
+					"~/LoadJsCode": {
+						action: "init"
+					}
+				},
+				load: {},
+				widgets: a.widgets
+				}
+		方法： init: 依次执行boot、ready、load方法
+			  loadUserConfig: ?
+			  boot:	直接执行registry.boot中配置的模块
+			  ready: 文档就绪后执行registry.ready中配置的模块
+			  load: window的load事件中执行registry.load中配置的模块
+
+2. 引入seajs的代码， 创建seajs的全局标示符Clicki。
+3. 创建clicki的对象，并拷贝对象属性到Clicki中，使Clicki继承类clicki；创建了Clicki的初始化函数，在该函数中，创建了类siteTracker的对象，并拷贝对象属性到Clicki中, 使Clicki继承类siteTracker；到此Clicki对象就继承了seajs、clicki、siteTracker三个类的功能。最后在初始化函数中调用siteTracker的init函数开始运行注册的模块的内容，即开始监测。
+4. 以seajs的方式定义了一些模块。
+5. 抛出监测对象Clicki的全局变量window.CClicki。
+
+## 前后台交互流程 ##
+1. 嵌入的js以页面添加script标签形式请求one.js
+2. one.js以页面添加script标签形式请求clicki.js
+3. 监测js执行后，页面发送数据给服务器track(0)
+4. 每分钟发送心跳信息给服务器track(2)
+5. 页面退出时最后一次发送请求track(1)
  
 ## Session是如何定义的 ##
 
