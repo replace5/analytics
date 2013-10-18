@@ -884,7 +884,7 @@
 		/* 功能：获取或设置cookie
 		 * 参数只有一个时，获取cookie, 参数即cookie名
 		 * 参数大于一个时，设置cookie，此时的参数列表： name, value, expire, path, domain, secure
-		 * expire默认值为0，path默认值为'/', domain默认值0，secure默认值0
+		 * expire默认值为""，path默认值为'/', domain默认值""，secure默认值""
 		 */
 		c = function(a) {	
 			var b = new Date,
@@ -906,12 +906,16 @@
 		exports.get = function(a) {		
 			return c(a)
 		},
-		/* 设置cookie, 参数中的域名不存在时，使用根级域名 */
+		/* 设置cookie
+		 * a:name, d:value, e:expire, f:path, g:domain, h:secure 
+		 */
 		exports.set = function(a, d, e, f, g, h) {
 			return ! g && Clicki.COOKIE_USE_ROOT_DOMAIN && (g = b(), window.document.domain !== g && (g = "." + g)),
 			c(a, d, e, f, g, h)
 		},
-		/* 设置cookie, 第一个参数是网站id, j始终为false */
+		/* 设置cookie
+		 * a:site_id, d:name, e:value, f:expire, g:path, h:domain, i:secure 
+		 */
 		exports.set2 = function(a, d, e, f, g, h, i) {
 			var j = Clicki[a] && Clicki[a].COOKIE_USE_ROOT_DOMAIN;
 			return ! h && j && (h = b(), window.document.domain !== h && (h = "." + h)),
@@ -998,7 +1002,7 @@
 		}
 	}),
 
-	//is_new:是否新访客
+	
 	Clicki.define("~/Visitor", null, function(require, exports) {
 		var a = require("~/Cookie"),
 		b = new Date,
@@ -1008,9 +1012,9 @@
 			e = "";
 			d || (d = b.visitor_id, c = 1);
 			var f = {};
-			return f.id = d,
-			f.is_new = c,
-			f.is_active = 0,
+			return f.id = d,		//visitor_id： 用户标识，用户第一次访问网站时服务器配置信息中的visitor_id（毫秒数），此后一直保持在cookie中，保持时间36e7
+			f.is_new = c,			//判断是否新访客，当cookie中存在visitor_id的值时，就认为不是新访客，否则就是新访客
+			f.is_active = 0,		//用户活跃程度，在sessionTimelist中的checkactive中判断
 			f
 		};
 		return {

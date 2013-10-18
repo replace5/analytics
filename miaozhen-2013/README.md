@@ -21,10 +21,10 @@ one.js有三部分内容：
 	        host: 'sitemonitor.cn.miaozhen.com',
 	        site_id: Number('45560'),
 	        site_name: "Philips%20Air%20Cleaner%20Summer",
-	        visitor_id: '1381370648523114',					//用户标识
-	        millisecond: '1381370648523114',				//session_id
+	        visitor_id: '1381370648523114',					//用户标识（毫秒）
+	        millisecond: '1381370648523114',				//session_id（毫秒）
 	        session_key: 'aq43oo',
-	        time: '1381370648523',							//服务器时间
+	        time: '1381370648523',							//服务器时间（秒）
 	        is_logined: true,
 	        rf_key: "dlnkwy7490",
 	        track_type: Number('0')||0,
@@ -100,16 +100,16 @@ session\_id存储在cookie中的时间是浏览器默认的存储时间，当浏
 + today: 今天的总访问次数, 今天的session数
 + review：10万小时内的回访数， 10万小时内session数-1
 + referer：页面来源
-+ page: Page对象，包括五个属性，url, domain：页面domain, title：页面title, server_time服务器时间, loadtime: js加载时间
++ page: Page对象，包括五个属性，url, domain：页面domain, title：页面title, server_time服务器时间, loadtime: 服务器时间与当前时间的差值
 + client: Client对象，包含信息，agent：浏览器信息userAgent，screen.width:屏幕宽，screen_height:屏幕高，screen_size: 页面宽*页面高/10000
 
-## 与Session相关的cookie ##
-+ "\_\_c\_session\_"+site\_id: session\_id, 存储时间：浏览器默认时间
-+ "\_\_c\_pv\_" + site_id: 本次会话的总访问页面数, 存储时间：浏览器默认时间
-+ "\_\_c\_review\_" + site_id: 回访次数, 存储时间：36e7
-+ "\_\_c\_today\_" + site_id: 今天的访问次数, 存储时间：今天的剩余时间
+## cookie保存的信息 ##
++ "\_\_c\_session\_"+site\_id: session\_id, 保存时间：浏览器默认时间
++ "\_\_c\_pv\_" + site_id: 本次会话的总访问页面数, 保存时间：浏览器默认时间
++ "\_\_c\_review\_" + site_id: 回访次数, 保存时间：36e7
++ "\_\_c\_today\_" + site_id: 今天的访问次数, 保存时间：今天的剩余时间
 + "\_\_c\_session\_at\_" + site_id: session_key
-+ "\_\_c\_visitor": visitor_id，用户标识
++ "\_\_c\_visitor": visitor_id，用户标识，保存时间：36e7
 
 ## SessionTimeList ##
 "~SessionTimeList"模块的主要作用是判断用户活跃程度，is_active, 取值0， 1， 2， 3
@@ -142,7 +142,7 @@ dom加载完成后，document添加click事件，判断时间源是否是a元素
 + domain: 页面域名
 + title: 页面title
 + server_time: 本次页面访问的服务器时间CLICKI_CF.time
-+ loadtime: js加载时间（猜测）
++ loadtime: 服务器时间与当前时间的差值
 
 ## Referer ##
 "~Referer"模块提供页面来源
@@ -193,7 +193,7 @@ track(0)额外发送的数据：
 + v: "id"-"is\_new"-"is\_active"(visitor的信息)  
 + rv: review回访次数
 + td: today今天访问的次数
-+ ru: refer.url来源
++ ru: 页面来源
 + sr: 屏幕宽-屏幕高-页面大小的指标
 + u: 页面url
 + dt: 页面title
