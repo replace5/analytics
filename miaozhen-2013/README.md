@@ -108,7 +108,7 @@ session\_id存储在cookie中的时间是浏览器默认的存储时间，当浏
 + "\_\_c\_pv\_" + site_id: 本次会话的总访问页面数, 保存时间：浏览器默认时间
 + "\_\_c\_review\_" + site_id: 回访次数, 保存时间：36e7
 + "\_\_c\_today\_" + site_id: 今天的访问次数, 保存时间：今天的剩余时间
-+ "\_\_c\_session\_at\_" + site_id: session_key
++ "\_\_c\_session\_at\_" + site_id: 最近的发请求的时间，最近的一次track的时间，保存时间：浏览器默认时间
 + "\_\_c\_visitor": visitor_id，用户标识，保存时间：36e7
 
 ## SessionTimeList ##
@@ -159,7 +159,7 @@ dom加载完成后，document添加click事件，判断时间源是否是a元素
 ## Cookie ##
 "~Cookie"模块对外提供三个接口：
 
-+ get: 根据名称获取cookie值。
++ get: 根据名称获取cookie值，cookie不存在时返回0。
 + set: 设置cookie(此代码中没有调用这个函数)。
 + set2: 设置cookie, 参数列表： site_id, name, value, expire, path, domain, secure
 
@@ -190,7 +190,7 @@ track(0)、track(1)、track(2)发送的共同数据：
 
 track(0)额外发送的数据：
 
-+ v: "id"-"is\_new"-"is\_active"(visitor的信息)  
++ v: "visitor_id"-"is\_new"-"is\_active"(visitor的信息)  
 + rv: review回访次数
 + td: today今天访问的次数
 + ru: 页面来源

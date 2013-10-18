@@ -882,7 +882,7 @@
 		}
 		var a = "",		//保存第一次执行b函数后获得的根级域名，以后不需要重复执行b函数
 		/* 功能：获取或设置cookie
-		 * 参数只有一个时，获取cookie, 参数即cookie名
+		 * 参数只有一个时，获取cookie, 当cookie不存在时返回0
 		 * 参数大于一个时，设置cookie，此时的参数列表： name, value, expire, path, domain, secure
 		 * expire默认值为""，path默认值为'/', domain默认值""，secure默认值""
 		 */
