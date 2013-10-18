@@ -63,7 +63,7 @@
         I = "toLowerCase";
 
     /**
-     *
+     *  生成参数 _u : usage
      */
     var pa = new function () {
         var a = [];
@@ -82,8 +82,8 @@
     };
 
     /**
-     *
-     * @param a
+     * 将数组中的第a个元素赋值为true。
+     * @param a 元素在数组中位置
      * @constructor
      */
     function J(a) {
@@ -152,7 +152,7 @@
     }
 
     /**
-     *
+     * 使用encodeURIComponent把a编码，将编码后的字符串中的小括号做 URL编码
      * @param a
      * @returns {XML}
      */
@@ -349,7 +349,8 @@
         /**
          *
          */
-        za = ea(/^(www\.)?google(\.com?)?(\.[a-z]{2})?$/), Aa = ea(/(^|\.)doubleclick\.net$/i);
+        za = ea(/^(www\.)?google(\.com?)?(\.[a-z]{2})?$/),
+        Aa = ea(/(^|\.)doubleclick\.net$/i);
 
     var
         /**
@@ -511,18 +512,22 @@
      *
      */
     function Ja(a) {
-        if (100 != a.get(Ka) && La(P(a, Q)) % 1E4 >= 100 * R(a, Ka))throw"abort";
+        if (100 != a.get(Ka) && La(P(a, Q)) % 1E4 >= 100 * R(a, Ka)){
+            throw"abort";
+        }
     }
 
     /**
      *
      */
     function Ma(a) {
-        if (xa(P(a, Na)))throw"abort";
+        if (xa(P(a, Na))){
+            throw"abort";
+        }
     }
 
     /**
-     *
+     *  如果location.protocol不是http或https时，
      */
     function Oa() {
         var a = M[B][E];
@@ -684,7 +689,7 @@
         };
 
     /**
-     * 矫正并设置Google Analytics 的命名空间
+     * 矫正并设置 Google Analytics 的命名空间
      */
     var Pc;
     if (Pc = qa(f.GoogleAnalyticsObject)) {
@@ -1178,9 +1183,9 @@
     };
 
     /**
-     *
-     * @param a
-     * @param b
+     * 监听页面 mousedown、touchstart 和 keyup 事件，查找 a或 area标签的 href属性。个人认为可能和监测“跳出率”指标有关
+     * @param a {}
+     * @param b {}
      * @constructor
      */
     Dc[z].S = function (a, b) {
@@ -1204,9 +1209,13 @@
                     var l;
                     t:{
                         var k = g[ma] || "";
-                        if (k != M[B][ma])for (ca = 0; ca < a[y]; ca++)if (0 <= k[t](a[ca])) {
-                            l = !0;
-                            break t
+                        if (k != M[B][ma]){
+                            for (ca = 0; ca < a[y]; ca++){
+                                if (0 <= k[t](a[ca])) {
+                                    l = !0;
+                                    break t
+                                }
+                            }
                         }
                         l = !1
                     }
