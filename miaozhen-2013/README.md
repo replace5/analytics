@@ -198,7 +198,7 @@ track(0)额外发送的数据：
 + u: 页面url
 + dt: 页面title
 + st: server_time(本次访问的服务器时间)
-+ lt: js加载时间
++ lt: loadtime（服务器时间与客户端时间的差值）
 
 ## AppEngine ##
 "~AppEngine"模块加载额外的程序代码的，要加载的js在CLICKI_CF.widgets中配置，此代码没有用到这个功能。
