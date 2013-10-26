@@ -290,8 +290,10 @@
 
     var O = f,
         M = document,
+
         /**
-         *
+         * 判断是否启用 Google Analytics（分析）停用浏览器扩展
+         * 可参见 https://docs.google.com/document/d/1PyNXDRj69367K2U6NdOQlv22-hlcxhlNpzdn5wWTQ-w/edit?pli=1
          */
         xa = function (a) {
             var b = O._gaUserPrefs;
@@ -330,7 +332,13 @@
         },
 
         /**
-         *
+         * 设置Cookie的值。
+         * @param a {String} Cookie的键。
+         * @param b {String} Cookie的值。
+         * @param c {String} Cookie的路径。
+         * @param d {String} Cookie的域。
+         * @param e {String} 是否启用 Google Analytics（分析）停用 的标识。
+         * @param g {Number} Cookie的过期时间。
          */
         zc = function (a, b, c, d, e, g) {
             e = xa(e) ? !1 : Aa.test(M[B][ma]) || "/" == c && za.test(d) ? !1 : !0;
@@ -347,9 +355,13 @@
         },
 
         /**
-         *
+         * google 域名的正则匹配
          */
         za = ea(/^(www\.)?google(\.com?)?(\.[a-z]{2})?$/),
+
+        /**
+         * doubleclick 域名的正则匹配
+         */
         Aa = ea(/(^|\.)doubleclick\.net$/i);
 
     var
@@ -385,12 +397,15 @@
         Ga = function (a, b) {
             b = b || L;
             if (2036 >= a[y]){
+                // 通过 img标签src属性的方式 发送计数请求
                 wc(a, b);
             } else if (8192 >= a[y]) {
                 var c = b;
+                //如果是Firefox浏览器且 数组不支持reduce方法
                 if (0 <= O[oa].userAgent[t]("Firefox") && ![].reduce){
                     throw new Ea(a[y]);
                 }
+                //XDomain的方式异步 或 iframe标签src属性的方式 发送计数请求
                 xc(a, c) || Fa(a, c)
             } else {
                 throw new Da(a[y]);
