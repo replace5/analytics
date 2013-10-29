@@ -1174,7 +1174,7 @@
     }
 
     /**
-     *  Linker
+     * Cross Domain Tracking ：Linker
      * @param a
      * @constructor
      */
@@ -1183,7 +1183,7 @@
     };
 
     /**
-     *
+     * Cross Domain Auto Linking ：decorate
      * @param a
      * @param b
      * @returns {*}
@@ -1198,7 +1198,8 @@
     };
 
     /**
-     * 监听页面 mousedown、touchstart 和 keyup 事件，查找 a或 area标签的 href属性。个人认为可能和监测“跳出率”指标有关
+     * Cross Domain Auto Linking ：autoLink
+     * 监听页面 mousedown、touchstart 和 keyup 事件，查找 a或 area标签的 href属性。
      * @param a {}
      * @param b {}
      * @constructor
@@ -1270,6 +1271,9 @@
                 a.set(ed, "", !0)
             }
         },
+        /**
+         * displayfeatures
+         */
         fd = function (a) {
             J(29);
             a = a.b;
