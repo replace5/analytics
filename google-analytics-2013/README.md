@@ -77,7 +77,7 @@ http://www.google-analytics.com/collect?
 - _v=j13 ：clientVersion
 - a=994561489 ：adSenseId
 - t=pageview ：hitType
-- _s=1 ：
+- _s=1 ：同一个页面发送计数请求的次数
 - dl=http%3A%2F%2Fweb.example.com%2Findex.html ：当前页面的URL地址 (由主机名和目标网页组成)
 - ul=zh-cn ：用户浏览器（或系统）语言
 - de=UTF-8 ：页面编码
