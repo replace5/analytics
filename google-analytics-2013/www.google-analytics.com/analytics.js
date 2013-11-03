@@ -12,7 +12,7 @@
     /**
      * 系统对象、属性表。
      */
-    var _encodeURI = encodeURIComponent,
+    var _encodeURIComponent = encodeURIComponent,
         _o_window = window,
         _setTimeout = setTimeout,
         _o_math = Math,
@@ -94,19 +94,18 @@
      * 判断参数a是否函数
      * @param fun {*}
      * @returns {boolean}
-     * @constructor
      */
     function isFunction(fun) {
         return "function" == typeof fun
     }
 
     /**
-     * 判断参数a是否字符串
-     * @param a
+     * 判断参数 str 是否字符串
+     * @param str {*}
      * @returns {boolean}
      */
-    function qa(a) {
-        return void 0 != a && -1 < (a.constructor + "")[prop_indexOf]("String")
+    function isString(str) {
+        return void 0 != str && -1 < (str.constructor + "")[prop_indexOf]("String")
     }
 
     /**
@@ -118,17 +117,16 @@
     }
 
     /**
-     * 创建引入图片a的dom对象
-     * @param a 图片路径
-     * @returns {*}
-     * @constructor
+     * createElement('img')方式创建图片元素
+     * @param path {String} 图片路径
+     * @returns {*} 图片路径为path的图片元素
      */
-    function Ca(a) {
-        var b = _o_document[prop_createElement]("img");
-        b.width = 1;
-        b.height = 1;
-        b.src = a;
-        return b
+    function createImg(path) {
+        var img = _o_document[prop_createElement]("img");
+        img.width = 1;
+        img.height = 1;
+        img.src = path;
+        return img
     }
 
     /**
@@ -140,24 +138,24 @@
 
     /**
      * 使用encodeURIComponent将 uri 编码
-     * @param uri {String} 是否要全部（包含":"、"/"、";" 和 "?"。）编码。
+     * @param uri {String} 要编码的字符串。
      * @returns {String} 编码后的字符串。
      */
     function Encode(uri) {
-        if (_encodeURI instanceof Function){
-            return _encodeURI(uri);
+        if (_encodeURIComponent instanceof Function){
+            return _encodeURIComponent(uri);
         }
         J(28);
         return uri
     }
 
     /**
-     * 使用encodeURIComponent把a编码，将编码后的字符串中的小括号做 URL编码
-     * @param a
-     * @returns {XML}
+     * 将使用encodeURIComponent编码后的uri中的小括号做URL编码
+     * @param uri {String} 含有小括号的字符串。
+     * @returns {String} 小括号被编码后的字符串。
      */
-    function ka(a) {
-        return Encode(a).replace(/\(/g, "%28").replace(/\)/g, "%29")
+    function encodeParenthesis(uri) {
+        return Encode(uri).replace(/\(/g, "%28").replace(/\)/g, "%29")
     }
 
     /**
@@ -200,31 +198,31 @@
     }
 
     /**
-     * 获取当前页面URL中的主域名
-     * @returns {*} URL中的主域名
+     * 处理hostname主域名。
+     * @returns {*} 处理过的hostname主域名。
      */
-    function eb() {
-        var a = "" + _o_document[prop_location][prop_hostname];
-        return 0 == a[prop_indexOf]("www.") ? a[prop_substring](4) : a
+    function processHostname() {
+        var hostname = "" + _o_document[prop_location][prop_hostname];
+        return 0 == hostname[prop_indexOf]("www.") ? hostname[prop_substring](4) : hostname
     }
 
     /**
-     * 获取载入当前文档的URL
-     * @param a
-     * @returns {string} 链接到本页的到上一页的URL地址
+     * 处理referrer网址。
+     * @param domain {String} 域名。
+     * @return {String} 处理过的referrer网址。
      */
-    function va(a) {
-        var b = _o_document.referrer;
-        if (/^https?:\/\//i.test(b)) {
-            if (a) {
-                return b;
+    function processReferrer(domain) {
+        var referrer = _o_document.referrer;
+        if (/^https?:\/\//i.test(referrer)) {
+            if (domain) {
+                return referrer;
             }
-            a = "//" + _o_document[prop_location][prop_hostname];
-            var c = b[prop_indexOf](a);
+            domain = "//" + _o_document[prop_location][prop_hostname];
+            var c = referrer[prop_indexOf](domain);
             if (5 == c || 6 == c)
-                if (a = b.charAt(c + a[prop_length]), "/" == a || "?" == a || "" == a || ":" == a)
+                if (domain = referrer.charAt(c + domain[prop_length]), "/" == domain || "?" == domain || "" == domain || ":" == domain)
                     return;
-            return b
+            return referrer
         }
     }
 
@@ -292,29 +290,31 @@
         _o_document = document,
 
         /**
-         * 判断是否启用 Google Analytics（分析）停用浏览器扩展
+         * 判断是否启用了不参与Google数据分析的扩展
          * 可参见 https://docs.google.com/document/d/1PyNXDRj69367K2U6NdOQlv22-hlcxhlNpzdn5wWTQ-w/edit?pli=1
+         * @param flag {String} 是否启用 停用Google Anflaglytics（分析） 的标识。
          */
-        xa = function (a) {
-            var b = _o_win._gaUserPrefs;
-            if (b && b.ioo && b.ioo() || a && !0 === _o_win["ga-disable-" + a]){
+        getGaUserPrefs = function (flag) {
+            var gaUserPrefs = _o_win._gaUserPrefs;
+            if (gaUserPrefs && gaUserPrefs.ioo && gaUserPrefs.ioo() || flag && !0 === _o_win["ga-disable-" + flag]){
                 return!0;
             }
             try {
-                var c = _o_win.external;
-                if (c && c._gaUserPrefs && "oo" == c._gaUserPrefs){
+                var external = _o_win.external;
+                if (external && external._gaUserPrefs && "oo" == external._gaUserPrefs){
                     return!0
                 }
-            } catch (d) {
+            } catch (exp) {
             }
             return!1
         },
 
         /**
          *  0.1秒后执行a方法
+         * @param callback {Function}
          */
-        fb = function (a) {
-            _setTimeout(a, 100)
+        wait = function (callback) {
+            _setTimeout(callback, 100)
         },
 
         /**
@@ -333,36 +333,36 @@
 
         /**
          * 设置Cookie的值。
-         * @param a {String} Cookie的键。
-         * @param b {String} Cookie的值。
-         * @param c {String} Cookie的路径。
-         * @param d {String} Cookie的域。
-         * @param e {String} 是否启用 Google Analytics（分析）停用 的标识。
-         * @param g {Number} Cookie的过期时间。
+         * @param key {String} Cookie的键。
+         * @param value {String} Cookie的值。
+         * @param path {String} Cookie的路径。
+         * @param domain {String} Cookie的域。
+         * @param flag {String} 是否启用 停用Google Analytics（分析） 的标识。
+         * @param timeout {Number} Cookie的过期时间。
          */
-        zc = function (a, b, c, d, e, g) {
-            e = xa(e) ? !1 : Aa.test(_o_document[prop_location][prop_hostname]) || "/" == c && za.test(d) ? !1 : !0;
-            if (!e){
+        setCookie = function (key, value, path, domain, flag, timeout) {
+            flag = getGaUserPrefs(flag) ? !1 : doubleclick_domain.test(_o_document[prop_location][prop_hostname]) || "/" == path && google_analytics_domain.test(domain) ? !1 : !0;
+            if (!flag){
                 return!1;
             }
-            b && 200 < b[prop_length] && (b = b[prop_substring](0, 200), J(24));
-            a = a + "=" + b + "; path=" + c + "; ";
-            g && (a += "expires=" + (new Date((new Date)[prop_getTime]() + g)).toGMTString() + "; ");
-            d && "none" != d && (a += "domain=" + d + ";");
-            d = _o_document[prop_cookie];
-            _o_document.cookie = a;
-            return d != _o_document[prop_cookie]
+            value && 200 < value[prop_length] && (value = value[prop_substring](0, 200), J(24));
+            key = key + "=" + value + "; path=" + path + "; ";
+            timeout && (key += "expires=" + (new Date((new Date)[prop_getTime]() + timeout)).toGMTString() + "; ");
+            domain && "none" != domain && (key += "domain=" + domain + ";");
+            domain = _o_document[prop_cookie];
+            _o_document.cookie = key;
+            return domain != _o_document[prop_cookie]
         },
 
         /**
          * google 域名的正则匹配
          */
-        za = _o_regexp(/^(www\.)?google(\.com?)?(\.[a-z]{2})?$/),
+        google_analytics_domain = _o_regexp(/^(www\.)?google(\.com?)?(\.[a-z]{2})?$/),
 
         /**
          * doubleclick 域名的正则匹配
          */
-        Aa = _o_regexp(/(^|\.)doubleclick\.net$/i);
+        doubleclick_domain = _o_regexp(/(^|\.)doubleclick\.net$/i);
 
     var
         /**
@@ -418,7 +418,7 @@
          * @param callback {Function} 回调函数。
          */
         sendByImage = function (src, callback) {
-            var c = Ca(oc() + "/collect?" + src);
+            var c = createImg(oc() + "/collect?" + src);
             c.onload = c.onerror = function () {
                 c.onload = null;
                 c.onerror = null;
@@ -454,7 +454,7 @@
          */
         sendByIFrame = function (param, callback) {
             if (_o_document.body) {
-                param = _encodeURI(param);
+                param = _encodeURIComponent(param);
                 try {
                     var c = _o_document[prop_createElement]('<iframe name="' + param + '"></iframe>')
                 } catch (d) {
@@ -466,7 +466,7 @@
                 c.style.visibility =
                     "hidden";
                 var e = _o_document[prop_location],
-                    e = oc() + "/analytics_iframe.html#" + _encodeURI(e[prop_protocol] + "//" + e[prop_host] + "/favicon.ico"),
+                    e = oc() + "/analytics_iframe.html#" + _encodeURIComponent(e[prop_protocol] + "//" + e[prop_host] + "/favicon.ico"),
                     g = function () {
                         c.src = "";
                         c[prop_parentNode] && c[prop_parentNode].removeChild(c)
@@ -491,7 +491,7 @@
                 AddListener(c, "load", k);
                 _o_document.body.appendChild(c);
                 c.src = e
-            } else fb(function () {
+            } else wait(function () {
                 sendByIFrame(param, b)
             })
         };
@@ -538,7 +538,7 @@
      *
      */
     function Ma(a) {
-        if (xa(P(a, Na))){
+        if (getGaUserPrefs(P(a, Na))){
             throw"abort";
         }
     }
@@ -699,8 +699,7 @@
             Za[prop_push]([_o_regexp("^" + a + "$"), b])
         },
         T = function (a, b, c) {
-            return S(a,
-                b, c, void 0, db)
+            return S(a, b, c, void 0, db)
         },
         db = function () {
         };
@@ -709,8 +708,9 @@
      * 矫正并设置 Google Analytics 的命名空间
      */
     var Pc;
-    if (Pc = qa(_o_window.GoogleAnalyticsObject)) {
+    if (Pc = isString(_o_window.GoogleAnalyticsObject)) {
         var Qc = _o_window.GoogleAnalyticsObject;
+        // 去除命名空间中的空白字符
         Pc = Qc ? Qc.replace(/^[\s\xa0]+|[\s\xa0]+$/g, "") : ""
     }
 
@@ -1012,34 +1012,35 @@
     };
 
     /**
-     * 获取浏览器flash player插件的版本
-     * @returns {*}
+     * 获取浏览器FLASH播放器的版本号。
+     * @return {String} FLASH播放器的版本号。
      */
-    function fc() {
-        var a, b, c;
-        if ((c = (c = _o_win[prop_navigator]) ? c.plugins : null) && c[prop_length])for (var d = 0; d < c[prop_length] && !b; d++) {
-            var e = c[d];
-            -1 < e[prop_name][prop_indexOf]("Shockwave Flash") && (b = e.description)
-        }
-        if (!b)try {
-            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7"),
-            b = a.GetVariable("$version")
+    function getFlashVersion() {
+        var _active_x_object, _version, _navigator;
+        if ((_navigator = (_navigator = _o_win[prop_navigator]) ? _navigator.plugins : null) && _navigator[prop_length])
+            for (var d = 0; d < _navigator[prop_length] && !_version; d++) {
+                var e = _navigator[d];
+                -1 < e[prop_name][prop_indexOf]("Shockwave Flash") && (_version = e.description)
+            }
+        if (!_version)try {
+            _active_x_object = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7"),
+            _version = _active_x_object.GetVariable("$version")
         } catch (g) {
         }
-        if (!b)try {
-            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6"),
-            b = "WIN 6,0,21,0",
-            a.AllowScriptAccess = "always",
-            b = a.GetVariable("$version")
+        if (!_version)try {
+            _active_x_object = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6"),
+            _version = "WIN 6,0,21,0",
+            _active_x_object.AllowScriptAccess = "always",
+            _version = _active_x_object.GetVariable("$version")
         } catch (ca) {
         }
-        if (!b)try {
-            a = new ActiveXObject("ShockwaveFlash.ShockwaveFlash"),
-            b = a.GetVariable("$version")
+        if (!_version)try {
+            _active_x_object = new ActiveXObject("ShockwaveFlash.ShockwaveFlash"),
+            _version = _active_x_object.GetVariable("$version")
         } catch (l) {
         }
-        b && (a = b[prop_match](/[\d]+/g)) && 3 <= a[prop_length] && (b = a[0] + "." + a[1] + " r" + a[2]);
-        return b || void 0
+        _version && (_active_x_object = _version[prop_match](/[\d]+/g)) && 3 <= _active_x_object[prop_length] && (_version = _active_x_object[0] + "." + _active_x_object[1] + " r" + _active_x_object[2]);
+        return _version || void 0
     };
 
     /**
@@ -1092,7 +1093,7 @@
         mc = function (a) {
             if ("cookie" == P(a, ac)) {
                 var b = P(a, U), c;
-                c = ka(P(a, Q));
+                c = encodeParenthesis(P(a, Q));
                 var d = ic(P(a, W)), e = jc(P(a, Yb));
                 1 < e && (d += "-" + e);
                 c = ["GA1", d, c][prop_join](".");
@@ -1100,7 +1101,7 @@
                     e = lc(P(a, W)),
                     g = 1E3 * R(a, Zb);
                 a = P(a, Na);
-                zc(b, c, d, e, a, g) && (hc = !0)
+                setCookie(b, c, d, e, a, g) && (hc = !0)
             }
         },
         nc = function (a) {
@@ -1110,7 +1111,7 @@
         },
         Yc = function (a) {
             if (a.get(Wc)) {
-                var b = P(a, W), c = P(a, $b) || eb(), d = Xc("__utma", c, b);
+                var b = P(a, W), c = P(a, $b) || processHostname(), d = Xc("__utma", c, b);
                 d && (J(19), a.set(Tc, (new Date)[prop_getTime](), !0), a.set(Rc, d.R), (b = Xc("__utmz", c, b)) && d[prop_hash] == b[prop_hash] && a.set(Sc, b.R))
             }
         },
@@ -1252,7 +1253,7 @@
 
 
     var gd = function (a) {
-            return a.get(V) && "t0" != a.get(V) ? "_dc_" + ka(a.get(V)) : "_dc"
+            return a.get(V) && "t0" != a.get(V) ? "_dc_" + encodeParenthesis(a.get(V)) : "_dc"
         },
         hd = function (a) {
             if (a.get(ed)) {
@@ -1269,7 +1270,7 @@
                     d += Encode(a) + "=" + Encode("" + c) + "&"
                 });
                 d += "z=" + Random();
-                Ca(d);
+                createImg(d);
                 a.set(ed, "", !0)
             }
         },
@@ -1282,7 +1283,7 @@
             var b = a.get(Wb);
             a.set(Wb, function (a) {
                 a.get(ed) || (-1 != _o_document[prop_cookie][prop_indexOf](gd(a) + "=1") ? a.set(ed, "", !0) : (gd(a),
-                    zc(gd(a), "1", a.get(Yb), a.get(W), a.get(Na), 6E5) ? a.set(ed, "" + Random(), !0) : J(30)));
+                    setCookie(gd(a), "1", a.get(Yb), a.get(W), a.get(Na), 6E5) ? a.set(ed, "" + Random(), !0) : J(30)));
                 return b(a)
             });
             var c = a.get(Xb);
@@ -1304,7 +1305,7 @@
                 d = _o_document[prop_location][prop_hash];
                 var e = _o_win[prop_name],
                     g = /^#?gaso=([^&]*)/;
-                if (e = (d = (d = d && d[prop_match](g) || e && e[prop_match](g)) ? d[1] : ya("GASO")[0] || "") && d[prop_match](/^(?:!([-0-9a-z.]{1,40})!)?([-.\w]{10,1200})$/i))zc("GASO", "" + d, c, b, a, 0), _o_window._udo || (_o_window._udo = b), _o_window._utcp || (_o_window._utcp = c), a = e[1], createScript("https://www.google.com/analytics/web/inpage/pub/inpage.js?" + (a ? "prefix=" + a + "&" : "") + Random(), "_gasojs");
+                if (e = (d = (d = d && d[prop_match](g) || e && e[prop_match](g)) ? d[1] : ya("GASO")[0] || "") && d[prop_match](/^(?:!([-0-9a-z.]{1,40})!)?([-.\w]{10,1200})$/i))setCookie("GASO", "" + d, c, b, a, 0), _o_window._udo || (_o_window._udo = b), _o_window._utcp || (_o_window._utcp = c), a = e[1], createScript("https://www.google.com/analytics/web/inpage/pub/inpage.js?" + (a ? "prefix=" + a + "&" : "") + Random(), "_gasojs");
                 ad = !0
             }
         };
@@ -1324,7 +1325,7 @@
             b(V, a[V]);
             b(Na, a[Na]);
             b(U, a[U]);
-            b(W, a[W] || eb());
+            b(W, a[W] || processHostname());
             b(Yb, a[Yb]);
             b(Zb, a[Zb]);
             b($b, a[$b]);
@@ -1389,7 +1390,7 @@
                     }
                     c = void 0
                 }
-                c || (c = P(a, W), d = P(a, $b) || eb(), c = Xc("__utma",
+                c || (c = P(a, W), d = P(a, $b) || processHostname(), c = Xc("__utma",
                     d, c), (c = void 0 == c ? void 0 : c.O[1] + "." + c.O[2]) && J(10));
                 c && (a[prop_data].set(Q, c), hc = !0)
             }
@@ -1408,7 +1409,7 @@
         },
         Kc = function (a) {
             var b = _o_win[prop_navigator], c = _o_win.screen, d = _o_document[prop_location];
-            a.set(lb, va(a.get(ec)));
+            a.set(lb, processReferrer(a.get(ec)));
             d && a.set(kb, d[prop_protocol] + "//" + d[prop_hostname] + d.pathname + d[prop_search]);
             c && a.set(qb, c.width + "x" + c.height);
             c && a.set(pb, c.colorDepth + "-bit");
@@ -1417,7 +1418,7 @@
                 g && (ca = [e[prop_clientWidth], e[prop_clientHeight]]);
             c = 0 >= ca[0] || 0 >= ca[1] ? "" : ca[prop_join]("x");
             a.set(rb, c);
-            a.set(tb, fc());
+            a.set(tb, getFlashVersion());
             a.set(ob, _o_document.characterSet || _o_document.charset);
             a.set(sb, b && "function" === typeof b.javaEnabled && b.javaEnabled() || !1);
             a.set(nb, (b && (b.language || b.browserLanguage) || "")[prop_toLowerCase]());
@@ -1542,8 +1543,8 @@
                 b = a[1];
                 a = a[2];
                 if (!this.d)throw"abort";
-                if (this.i && (!qa(b) || "" == b))throw"abort";
-                if (this.g && (!qa(b) || "" == b || !isFunction(a)))throw"abort";
+                if (this.i && (!isString(b) || "" == b))throw"abort";
+                if (this.g && (!isString(b) || "" == b || !isFunction(a)))throw"abort";
                 if (0 <= this.c[prop_indexOf](".") || 0 <= this.c[prop_indexOf](":") || 0 <= this.e[prop_indexOf](".") || 0 <= this.e[prop_indexOf](":"))throw"abort";
                 if (this.g && "t0" != this.c)throw"abort";
             }
