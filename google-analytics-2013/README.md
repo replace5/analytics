@@ -32,7 +32,7 @@ Google Analytics
 	        i['GoogleAnalyticsObject'] = r; //定义谷歌的命名空间 ‘ga'
 	
 	        /*
-	        初始化Google Analytics（分析）函数队列
+	        初始化Google Analytics（分析）函数队列。执行ga（）时，将参数推送到队列q中
 	         */
 	        i[r] = i[r] || function () {
 	            (i[r].q = i[r].q || []).push(arguments)
