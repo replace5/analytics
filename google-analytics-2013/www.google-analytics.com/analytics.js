@@ -1208,19 +1208,19 @@
      * @constructor
      */
     Dc[prop_prototype].S = function (a, b) {
-        function c(c) {
+        function c(event) {
             try {
-                c = c || _o_win.event;
+                event = event || _o_win.event;
                 var g;
                 t:{
-                    var ca = c.target || c.srcElement;
-                    for (c = 100; ca && 0 < c;) {
+                    var ca = event.target || event.srcElement;
+                    for (event = 100; ca && 0 < event;) {
                         if (ca[prop_href] && ca.nodeName[prop_match](/^a(?:rea)?$/i)) {
                             g = ca;
                             break t
                         }
                         ca = ca[prop_parentNode];
-                        c--
+                        event--
                     }
                     g = {}
                 }
