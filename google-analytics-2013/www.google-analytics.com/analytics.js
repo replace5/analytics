@@ -394,7 +394,7 @@
          * @param a {String} 计数请求的参数
          * @param b {Function} 发送请求后的回调函数
          */
-        Ga = function (a, b) {
+        sendCount = function (a, b) {
             b = b || emptyFunction;
             if (2036 >= a[prop_length]){
                 // 通过 img标签src属性的方式 发送计数请求
@@ -544,9 +544,9 @@
     }
 
     /**
-     *  如果location.protocol不是http或https时，
+     *  如果location.protocol不是http，也不是https时抛出终止异常
      */
-    function Oa() {
+    function getProtocol() {
         var a = _o_document[prop_location][prop_protocol];
         if ("http:" != a && "https:" != a) {
             throw "abort";
@@ -575,7 +575,7 @@
      * @constructor
      */
     function Sa(a) {
-        Ga(P(a, Ra), a.get(Ia));
+        sendCount(P(a, Ra), a.get(Ia));
         a.set(Ia, emptyFunction, !0)
     }
 
@@ -591,7 +591,9 @@
      *
      */
     function cd() {
-        if (_o_win[prop_navigator] && "preview" == _o_win[prop_navigator].loadPurpose)throw"abort";
+        if (_o_win[prop_navigator] && "preview" == _o_win[prop_navigator].loadPurpose){
+            throw"abort";
+        }
     };
 
     /**
@@ -1004,7 +1006,7 @@
                     g && ca[prop_push]("_m=" + Encode(g[prop_substring](0, 100)));
                     ca[prop_push]("aip=1");
                     ca[prop_push]("z=" + Random());
-                    Ga(ca[prop_join]("&"))
+                    sendCount(ca[prop_join]("&"))
                 }
                 throw b;
             }
@@ -1340,7 +1342,7 @@
             b(ib, "j13");
             c(Qb, Ma);
             c(dd, cd);
-            c(Rb, Oa);
+            c(Rb, getProtocol);
             c(Sb, nc);
             c(Uc, Yc);
             c(Tb, Ja);
